@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'README';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Cryptography" href="cryptography.html" />
+    <link rel="next" title="Vulneranilities" href="vulnerabilities.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -166,6 +166,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="vulnerabilities.html">Stack Related Vulnerabilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cryptography.html">Cryptography</a></li>
 </ul>
 
@@ -337,7 +338,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -353,6 +356,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-security">What is Security?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#threat-model">Threat Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-mechanism">Security Mechanism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-security-hard">Why is Security Hard?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-can-we-trust">What Can We Trust?</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -364,7 +379,94 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ece568-computer-security-2023-fall">
 <h1>ECE568 Computer Security - 2023 Fall<a class="headerlink" href="#ece568-computer-security-2023-fall" title="Permalink to this heading">#</a></h1>
-<p>My Notes for Computer Security Course</p>
+<p><a class="reference external" href="https://xiaorui-huang.github.io/ece568_notes/">My Notes for Computer Security Course</a></p>
+<section id="what-is-security">
+<h2>What is Security?<a class="headerlink" href="#what-is-security" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Goal vs. Adversary</strong></p>
+<ul>
+<li><p>Objective of security measures against potential threats.</p></li>
+</ul>
+</li>
+<li><p><strong>Security Policies</strong></p>
+<ul>
+<li><p><strong>Confidentiality</strong>: Ensuring that information is accessible only to those authorized to have access.</p></li>
+<li><p><strong>Integrity</strong>: Maintaining and assuring the accuracy and consistency of data over its entire life-cycle.</p></li>
+<li><p><strong>Availability</strong>: Ensuring that authorized users have access to information and associated resources when required.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="threat-model">
+<h2>Threat Model<a class="headerlink" href="#threat-model" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Assumptions about the adversary</strong></p>
+<ul>
+<li><p>Understanding what the adversary knows, their capabilities, and intentions.</p></li>
+</ul>
+</li>
+<li><p><strong>Attacker’s motivation</strong></p>
+<ul>
+<li><p><strong>Economics</strong>: Profit-driven motives.</p></li>
+<li><p><strong>Fun &amp; Profit</strong>: Personal gains and amusement.</p></li>
+<li><p><strong>Vulnerability Marketplace</strong>: Platforms or forums where vulnerabilities are sold or discussed.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="security-mechanism">
+<h2>Security Mechanism<a class="headerlink" href="#security-mechanism" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>How to help uphold a security policy</strong></p>
+<ul>
+<li><p><strong>Permission system</strong>: Defines who can access what.</p></li>
+<li><p><strong>Encryption</strong>: Process of converting information or data into a code to prevent unauthorized access.</p></li>
+<li><p><strong>Hardware protection</strong>: Physical safeguards for data and devices.</p></li>
+</ul>
+</li>
+<li><p><strong>Security goal vs. Security mechanism</strong></p>
+<ul>
+<li><p>The defined security objectives don’t dictate the methods used to achieve them.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="why-is-security-hard">
+<h2>Why is Security Hard?<a class="headerlink" href="#why-is-security-hard" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Assuming the threat model</strong></p>
+<ul>
+<li><p>Working on real-life scenarios.</p></li>
+<li><p>Adapting to changing environments.</p></li>
+</ul>
+</li>
+<li><p><strong>Challenges</strong></p>
+<ul>
+<li><p><strong>Enumerating all possible ways to attack</strong>: Identifying every potential vulnerability or threat.</p></li>
+<li><p><strong>Weakest link matters</strong>: The strength of a system is determined by its most vulnerable point.</p></li>
+<li><p><strong>Hardware changing</strong>: Need to adapt to evolving hardware technologies.</p></li>
+<li><p><strong>Human errors</strong>: Mistakes made by people that can lead to breaches or vulnerabilities.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="what-can-we-trust">
+<h2>What Can We Trust?<a class="headerlink" href="#what-can-we-trust" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Trust Issues</strong></p>
+<ul>
+<li><p><strong>Nothing can be trusted</strong>: Constant skepticism in the security realm.</p></li>
+<li><p><strong>But we still need to work something out</strong>: Necessity to devise some trust model.</p></li>
+</ul>
+</li>
+<li><p><strong>Assuming TCB: Trusted Computing Base</strong></p>
+<ul>
+<li><p><strong>The minimal part of the system is not compromised</strong>: Fundamental system components that need to be secure.</p></li>
+<li><p><strong>All secure systems built on top of that</strong>: Building additional layers of security based on the TCB.</p></li>
+</ul>
+</li>
+</ul>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -400,11 +502,11 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
-       href="cryptography.html"
+       href="vulnerabilities.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Cryptography</p>
+        <p class="prev-next-title">Vulneranilities</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -414,6 +516,24 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-security">What is Security?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#threat-model">Threat Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-mechanism">Security Mechanism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-security-hard">Why is Security Hard?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-can-we-trust">What Can We Trust?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -433,7 +553,7 @@ By Xiaorui Huang
     
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
