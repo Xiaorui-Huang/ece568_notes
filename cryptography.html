@@ -1,0 +1,1697 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Cryptography &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'cryptography';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Jupyter Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Cryptography
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/cryptography.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cryptography</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ciphers">Ciphers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trapdoor-one-way-functions">Trapdoor one-way functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kerckhoff-s-principle">Kerckhoff’s Principle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#substitution-ciphers-and-caesar-shift-cipher">Substitution Ciphers and Caesar (Shift) Cipher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strength-of-a-cipher">Strength of a Cipher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attacks-on-substitution-ciphers">Attacks on substitution ciphers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poly-alphabetic-periodic-cipher">Poly-alphabetic/Periodic Cipher</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attack">Attack</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-time-pad-otp-vernam-cipher">One Time Pad (OTP) / Vernam Cipher</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disadvantages">Disadvantages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strength-levels">Strength levels</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-ciphers-requirements">Practical Ciphers Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetric-key-ciphers">Symmetric Key Ciphers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#block-ciphers">Block Ciphers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stream-ciphers">Stream Ciphers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-prevalence">Usage Prevalence</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cryptosystem-techniques">Cryptosystem Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion">Confusion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion">Diffusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xor-properties"><code class="docutils literal notranslate"><span class="pre">XOR</span></code> Properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-block-ciphers">Common Block Ciphers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#des-data-encryption-standard">DES (Data Encryption Standard)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feistel-network-overview">Feistel Network Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reversible-proof">Reversible proof</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-schedule-process-in-des">Key Schedule Process in DES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#every-round-s-computation-in-des">Every Round’s Computation in DES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issues-with-des">Issues with DES</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cryptosystem-components">Cryptosystem Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-encryption-and-decryption">Relation Between Encryption and Decryption**</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-the-cryptosystem">Defining the Cryptosystem</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aes-advanced-encryption-standard">AES (Advanced Encryption Standard)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structure-of-aes">Structure of AES</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#byte-substitution-transformation">Byte Substitution Transformation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#shift-rows-transformation">Shift Rows Transformation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mix-column-transformation">Mix Column Transformation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#round-key-addition">Round Key Addition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#block-cipher-encryption-modes-summary">Block Cipher Encryption Modes Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#electronic-codebook-ecb-mode">Electronic Codebook (ECB) Mode</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cipher-block-chaining-cbc-mode">Cipher Block Chaining (CBC) Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ways-around-ciphers-like-aes">Ways Around Ciphers like AES?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#side-channels">Side Channels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#timing-side-channel-attack">Timing Side Channel Attack</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploitation">Exploitation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-t-table-lookups">Analysis of t-table lookups</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#exploit-cache-timing-channel">Exploit Cache Timing Channel</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-of-attack">Implementation of Attack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cryptography">
+<h1>Cryptography<a class="headerlink" href="#cryptography" title="Permalink to this heading">#</a></h1>
+<p>they are protecting the storage and transmission of data.</p>
+<ol class="arabic simple">
+<li><p><strong>Confidentiality</strong>: Secrecy of the data (already discussed). This is provided by
+a set of devices called <strong>Ciphers</strong>.</p></li>
+<li><p><strong>Integrity</strong>: The trustworthiness of the data (also already discussed). Provided by <strong>Hashes</strong>.</p></li>
+<li><p><strong>Authentication</strong>: Allows a principal (user or machine) to prove their identity,
+or the origin of a piece of data. Provided by Message Authentication Codes
+(<strong>MAC’s</strong>) and <strong>Signatures</strong>.</p></li>
+<li><p><strong>Non-repudiation</strong>: Prevent that principal from later denying that they
+performed the action. This can be achieved with the help of a <strong>Trusted 3rd
+Party</strong></p></li>
+</ol>
+<section id="ciphers">
+<h2>Ciphers<a class="headerlink" href="#ciphers" title="Permalink to this heading">#</a></h2>
+<p>Algorithm that can be used to obfuscate information, that appears random to anyone
+who does not possess special information called a key</p>
+</section>
+<section id="trapdoor-one-way-functions">
+<h2>Trapdoor one-way functions<a class="headerlink" href="#trapdoor-one-way-functions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A one-way function is a function that is <strong>easy</strong> to compute, but whose <strong>inverse</strong>
+is <strong>difficult</strong> to compute.</p></li>
+<li><p>The “trapdoor” means that given a special piece of information (the <strong>key</strong>), the
+inverse will also become easy to compute</p></li>
+</ul>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>Factoring</p>
+<div class="math notranslate nohighlight">
+\[f(x, y) = x * y\]</div>
+<div class="math notranslate nohighlight">
+\[f^{-1}(z)= (x, y), \text{where } x \times y = z\]</div>
+</li>
+<li><p>Discrete logarithms</p>
+<div class="math notranslate nohighlight">
+\[f(x,y,n) = x^y \mod n\]</div>
+<div class="math notranslate nohighlight">
+\[f^{-1}(z,x,m) = y, \text{where } x^y \mod n = z\]</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="kerckhoff-s-principle">
+<h2>Kerckhoff’s Principle<a class="headerlink" href="#kerckhoff-s-principle" title="Permalink to this heading">#</a></h2>
+<p>Security of a cipher should depend only on the secrecy of the <strong>key</strong>, not on the secrecy of the algorithm.</p>
+<p>i.e. the algorithm should be public, and only the key should be secret.</p>
+<ul class="simple">
+<li><p>Algorithms are hard to change</p></li>
+<li><p>An algorithm can be audited studied and publicly known
+without making it useless.</p></li>
+<li><p>Deployed implementations need only protect the key instead of the whole algorithm</p></li>
+</ul>
+</section>
+<section id="substitution-ciphers-and-caesar-shift-cipher">
+<h2>Substitution Ciphers and Caesar (Shift) Cipher<a class="headerlink" href="#substitution-ciphers-and-caesar-shift-cipher" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>e.g. Rot13</p></li>
+<li><p>Each plain text letter is replaced with <strong>exactly one</strong> cipher text letter.</p></li>
+<li><p>The key is the <strong>mapping</strong> between plain text letters and cipher text letters.</p></li>
+</ul>
+</section>
+<section id="strength-of-a-cipher">
+<h2>Strength of a Cipher<a class="headerlink" href="#strength-of-a-cipher" title="Permalink to this heading">#</a></h2>
+<p><strong>Attacks targets</strong>:</p>
+<ul class="simple">
+<li><p>Plain text and cipher text pairs</p></li>
+<li><p>Cipher key, (also algorithm if it’s private)</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p><strong>Cipher Text only</strong>: The adversary only has access to cipher texts.</p></li>
+<li><p><strong>Known Plain Text/Cipher Text Pairs</strong>: The adversary has access to some number of
+plain text/cipher text pairs. The more pairs it takes to crack the cipher,
+the stronger the cipher is.</p></li>
+<li><p><strong>Chosen Plain Text/Cipher Text</strong>: The adversary can generate cipher-plain
+text pairs. Thus, the adversary can <strong>adaptively</strong> select plain texts/cipher
+texts that help her break the cipher.</p></li>
+</ol>
+</section>
+<section id="attacks-on-substitution-ciphers">
+<h2>Attacks on substitution ciphers<a class="headerlink" href="#attacks-on-substitution-ciphers" title="Permalink to this heading">#</a></h2>
+<p><strong>One-to-one</strong> mapping makes it easy to break the cipher.</p>
+<p><strong>Frequency Analysis</strong> :</p>
+<p>If the attacker knows the original
+message is in English, then:</p>
+<ul class="simple">
+<li><p>E has probability 0.12</p></li>
+<li><p>TAOINSHR has probability 0.06 - 0.09</p></li>
+<li><p>DL has probability 0.04</p></li>
+<li><p>Etc…</p></li>
+</ul>
+</section>
+<section id="poly-alphabetic-periodic-cipher">
+<h2>Poly-alphabetic/Periodic Cipher<a class="headerlink" href="#poly-alphabetic-periodic-cipher" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use multiple substitution ciphers, each with a different key.</p></li>
+<li><p>set of n mappings, and change the mapping with every character.</p></li>
+<li><p>Wrap around the mapping when you run out of mappings.</p></li>
+</ul>
+<section id="attack">
+<h3>Attack<a class="headerlink" href="#attack" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Given the period, an attack is possible.</p></li>
+<li><p>For small <span class="math notranslate nohighlight">\(n\)</span> this is only incrementally harder than a plain substitution cipher</p></li>
+<li><p>The attack requires more cipher text examples, but becomes easier if the
+adversary has a plain text/cipher text pair.</p></li>
+</ul>
+</section>
+</section>
+<section id="one-time-pad-otp-vernam-cipher">
+<h2>One Time Pad (OTP) / Vernam Cipher<a class="headerlink" href="#one-time-pad-otp-vernam-cipher" title="Permalink to this heading">#</a></h2>
+<p>A theoretically unbreakable cipher, also known as the Vernam Cipher after its
+inventor. It’s a polyalphabetic cipher that never repeats.</p>
+<ul class="simple">
+<li><p><strong>Alphabet</strong>: Operates at the bit level, with an alphabet of 2 symbols (0 and 1).</p></li>
+<li><p><strong>Key Requirements</strong>:</p>
+<ul>
+<li><p>The key must be the same length as the message.</p></li>
+<li><p>The key should be randomly chosen.</p></li>
+</ul>
+</li>
+<li><p><strong>Encryption Method</strong>:</p>
+<ul>
+<li><p>Utilizes bitwise <code class="docutils literal notranslate"><span class="pre">XOR</span></code> operation between the plain text and the key.</p></li>
+<li><p>If a bit in the key is 1, the corresponding plain text bit is flipped.</p></li>
+<li><p>If a bit in the key is 0, the corresponding plain text bit remains the same.</p></li>
+</ul>
+</li>
+<li><p><strong>Security</strong>:</p>
+<ul>
+<li><p>Considered information theoretically secure.</p></li>
+<li><p>Adds exactly as much randomness as the message contains, resulting in a completely random ciphertext.</p></li>
+</ul>
+</li>
+</ul>
+<section id="disadvantages">
+<h3>Disadvantages<a class="headerlink" href="#disadvantages" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Key Length</strong>: Key equals message length, causing bandwidth issues (overhead
+at 100%).</p></li>
+<li><p><strong>Single Use</strong>: Each key is usable only once. Reuse compromises security.</p></li>
+<li><p><strong>Malleability</strong>: Flipping a ciphertext bit alters the plaintext. An integrity
+check is essential.</p></li>
+<li><p><strong>Randomness</strong>: Requires a good/true random key source.</p></li>
+</ul>
+</section>
+<section id="strength-levels">
+<h3>Strength levels<a class="headerlink" href="#strength-levels" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Cipher Text only attack</strong>:</p>
+<ul class="simple">
+<li><p><strong>Strength</strong>: Extremely strong.</p></li>
+<li><p><strong>Reason</strong>: An attacker only has the ciphertext and without the one-time
+pad key, deciphering the plaintext is impossible. Given the ciphertext, all
+plaintexts of the same length are equally probable.</p></li>
+</ul>
+</li>
+<li><p><strong>Known Ciphertext/Plaintext attack</strong>:</p>
+<ul class="simple">
+<li><p><strong>Strength</strong>: Very strong.</p></li>
+<li><p><strong>Reason</strong>: Even if an attacker knows a certain plaintext was turned into a
+certain ciphertext using an OTP key, they gain no information about any
+other segment of the key or any other plaintexts, since each part of the
+key is used only once and is random.</p></li>
+</ul>
+</li>
+<li><p><strong>Chosen Ciphertext/Plaintext attack</strong>:</p>
+<ul class="simple">
+<li><p><strong>Strength</strong>: Very strong.</p></li>
+<li><p><strong>Reason</strong>: Since the OTP key is random and used only once, knowing how one
+plaintext maps to one ciphertext provides no advantage. An attacker can’t
+derive any meaningful patterns or information about the key, making the OTP
+resilient against this type of attack as well.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="practical-ciphers-requirements">
+<h2>Practical Ciphers Requirements<a class="headerlink" href="#practical-ciphers-requirements" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Key Length</strong>: Practical ciphers use fixed-length keys, which are notably
+shorter than the message. The key length is independent of the message length.</p></li>
+<li><p><strong>Efficiency</strong>: They are designed to be efficient for both encryption and
+decryption processes.</p></li>
+<li><p><strong>Security</strong>: The ciphertexts produced by these ciphers are computationally
+challenging to decrypt without the correct key.</p>
+<ul>
+<li><p><strong>Note</strong>: The term “computationally difficult” evolves, as
+computers continually advance in power.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="symmetric-key-ciphers">
+<h2>Symmetric Key Ciphers<a class="headerlink" href="#symmetric-key-ciphers" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Symmetric Key Ciphers</strong>: These ciphers utilize the same key for both encryption and decryption and are categorized into two main types.</p></li>
+</ul>
+<section id="block-ciphers">
+<h3>Block Ciphers<a class="headerlink" href="#block-ciphers" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Encrypts plain text a block at a time, often 64 bits or its multiples.</p></li>
+<li><p>The plain text gets divided into blocks for individual encryption.</p></li>
+<li><p>If the <strong>last block</strong> isn’t of the full block length, it might need <strong>padding</strong>.</p></li>
+</ul>
+</section>
+<section id="stream-ciphers">
+<h3>Stream Ciphers<a class="headerlink" href="#stream-ciphers" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>More akin to OTPs.</p></li>
+<li><p>Uses a key to produce a pseudo-random bit sequence.</p></li>
+<li><p>These bits are then <code class="docutils literal notranslate"><span class="pre">XOR</span></code>’ed with the cipher text, allowing for bit-by-bit encryption.</p></li>
+<li><p>Particularly useful for streaming data, like voice or video.</p></li>
+<li><p>A <strong>drawback</strong> is synchronization issues. If bits are lost, the entire stream might need retransmission.</p></li>
+</ul>
+</section>
+<section id="usage-prevalence">
+<h3>Usage Prevalence<a class="headerlink" href="#usage-prevalence" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Block ciphers are utilized more frequently than Stream Ciphers.</p></li>
+<li><p>Historically, many stream ciphers were proprietary, which made their security harder to assess.</p></li>
+<li><p>In contrast, several block ciphers are publicly available and have undergone rigorous analysis.</p></li>
+</ul>
+</section>
+</section>
+<section id="cryptosystem-techniques">
+<h2>Cryptosystem Techniques<a class="headerlink" href="#cryptosystem-techniques" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>In his 1949 paper titled “<em>Communication Theory of Secrecy Systems</em>”, Claude Shannon identified two foundational techniques for a robust cryptosystem:</p>
+<ul>
+<li><p>Confusion</p></li>
+<li><p>Diffusion.</p></li>
+</ul>
+</li>
+</ul>
+<section id="confusion">
+<h3>Confusion<a class="headerlink" href="#confusion" title="Permalink to this heading">#</a></h3>
+<p><strong>Confusion</strong> refers to the obscuring of the relationship between the plaintext
+(original message) and the ciphertext (encrypted message). Key aspects include:</p>
+<ul>
+<li><p><strong>Statistical Analysis</strong>: The primary objective of confusion is to challenge
+statistical analysis. Even if an attacker obtains many known
+plaintext/ciphertext pairs, decrypting other ciphertexts should remain
+non-trivial.</p></li>
+<li><p><strong>Non-linear Encoding</strong>: The encoding mechanism should not be straightforward.
+For instance, encrypting the sum of two messages, should
+not be equal to the sum of their individual encryptions.</p>
+<div class="math notranslate nohighlight">
+\[E_k(M_1 + M_2) \neq E_k(M1) +
+  E_k(M2)\]</div>
+</li>
+<li><p><strong>Key Dependency</strong>: Every character in the ciphertext should <strong>rely on the
+entire encryption key</strong>. This ensures that slight changes in the key lead to
+significant changes in the ciphertext, further complicating decryption
+attempts.</p></li>
+</ul>
+</section>
+<section id="diffusion">
+<h3>Diffusion<a class="headerlink" href="#diffusion" title="Permalink to this heading">#</a></h3>
+<p><strong>Diffusion</strong> is the property of distributing the impact of individual plaintext
+characters over a significant portion of the ciphertext. Key aspects of
+diffusion include:</p>
+<ul class="simple">
+<li><p><strong>Multiple Input Bits Influence</strong>: Each output bit in the ciphertext is
+<strong>affected by numerous input bits from the plaintext</strong>. This ensures that a change
+in a single bit of plaintext results in changes across several bits of the
+ciphertext.</p></li>
+<li><p><strong>Bit Flipping Effect</strong>: Ideally, if you flip just one bit in the <strong>key or
+plaintext</strong>, about half of the output bits should change.</p></li>
+<li><p><strong>Pattern Concealment</strong>: Any recurring <strong>patterns</strong> present in the plaintext get
+<strong>distributed</strong> across the entire ciphertext. This dispersion conceals the
+statistical properties of the plaintext, making cryptanalysis more
+challenging.</p></li>
+</ul>
+</section>
+</section>
+<section id="xor-properties">
+<h2><a class="reference external" href="https://accu.org/journals/overload/20/109/lewin_1915/"><code class="docutils literal notranslate"><span class="pre">XOR</span></code> Properties</a><a class="headerlink" href="#xor-properties" title="Permalink to this heading">#</a></h2>
+<div class="toggle docutils container">
+<ul>
+<li><p><strong>Commutative</strong> : <span class="math notranslate nohighlight">\(A ⊕ B = B ⊕ A \)</span></p>
+<p>This is clear from the definition of XOR: it doesn’t matter which way round you order the two inputs.</p>
+</li>
+<li><p><strong>Associative</strong> : <span class="math notranslate nohighlight">\(A ⊕ ( B ⊕ C ) = ( A ⊕ B ) ⊕ C\)</span></p>
+<p>This means that XOR operations can be chained together and the order doesn’t matter. If you aren’t convinced of the truth of this statement, try drawing the truth tables.</p>
+</li>
+<li><p><strong>Identity element</strong> : <span class="math notranslate nohighlight">\(A ⊕ 0 = A\)</span></p>
+<p>This means that any value XOR’d with zero is left unchanged.</p>
+</li>
+<li><p><strong>Self-inverse</strong> : <span class="math notranslate nohighlight">\(A ⊕ A = 0\)</span></p>
+<p>This means that any value XOR’d with itself gives zero</p>
+</li>
+</ul>
+<p>These properties hold not only when XOR is applied to a single bit, but also when it is applied bitwise to a <strong>vector of bits</strong> (e.g. a byte)</p>
+</div>
+</section>
+<section id="common-block-ciphers">
+<h2>Common Block Ciphers<a class="headerlink" href="#common-block-ciphers" title="Permalink to this heading">#</a></h2>
+<p>Block ciphers encrypt data in fixed-size blocks, typically using a symmetric
+key. The National Institute of Standards and Technology (NIST) has standardized
+several block ciphers, among which the most prominent are:</p>
+<ul class="simple">
+<li><p><strong>DES (Data Encryption Standard)</strong>: It was one of the earliest encryption
+standards adopted widely. However, its smaller key size made it susceptible to
+brute-force attacks.</p></li>
+<li><p><strong>AES (Advanced Encryption Standard)</strong>: This replaced DES as the primary
+encryption standard in 2000. It offers multiple key lengths and is currently
+considered very secure.</p></li>
+</ul>
+<p>Both DES and AES are <strong>iterated block ciphers</strong>. This means they transform each
+block of plaintext multiple times using the same process or function, applying
+different subkeys derived from the main encryption key.</p>
+</section>
+<section id="des-data-encryption-standard">
+<h2>DES (Data Encryption Standard)<a class="headerlink" href="#des-data-encryption-standard" title="Permalink to this heading">#</a></h2>
+<p>The <strong>Data Encryption Standard (DES)</strong> has a <strong>56-bit key</strong> and operates on <strong>64-bit data</strong> blocks. Due to advances in computational power, its key length is now too short to withstand modern brute-force attacks. Hence, <strong>DES is no longer deemed secure</strong>.</p>
+<p><strong>Structure of DES:</strong></p>
+<ul class="simple">
+<li><p><strong>DES</strong> employs a <strong>Feistel Network</strong>.</p></li>
+<li><p>Within each of its several “rounds”:</p>
+<ul>
+<li><p>The input is divided into two halves: left (L) and right (R).</p></li>
+<li><p>These halves are interchanged.</p></li>
+<li><p>One half undergoes a computation that uses a portion of the key, termed a <strong>sub-key <span class="math notranslate nohighlight">\( K_i \)</span></strong>.</p></li>
+<li><p>The outcome of a round is the input for the subsequent one.</p></li>
+</ul>
+</li>
+<li><p>This pattern is executed for <strong>16 rounds</strong> as per the DES standard.</p></li>
+</ul>
+<p><img alt="Alt text" src="_images/feistel_network_diagram.png" /></p>
+<section id="feistel-network-overview">
+<h3>Feistel Network Overview<a class="headerlink" href="#feistel-network-overview" title="Permalink to this heading">#</a></h3>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>Always yields a function that <strong>can be decrypted</strong>, regardless of the function <span class="math notranslate nohighlight">\( f
+\)</span> used.</p></li>
+</ul>
+<p>The Feistel structure guarantees invertibility, which means you can always
+derive the original plaintext from the ciphertext using the correct key. This is
+due to the design of the Feistel network itself:</p>
+<ol class="arabic simple">
+<li><p>In each round, the original input is split into two halves: left (L) and
+right (R).</p></li>
+<li><p>Only one of these halves (typically the right half) undergoes the
+transformation function <span class="math notranslate nohighlight">\( f \)</span>, and this transformed value is combined (usually
+by <code class="docutils literal notranslate"><span class="pre">XOR</span></code>) with the other half.</p></li>
+<li><p>After this, the two halves are swapped.</p></li>
+</ol>
+<p>Because of this swapping after every round and the fact that <strong>only one-half is
+transformed</strong> while the other half remains unchanged, you can always reverse the
+process. During decryption, using the <strong>sub-keys in reverse order</strong>, you can easily
+retrieve the original input by running the data through the inverse Feistel
+operations.</p>
+<section id="reversible-proof">
+<h4>Reversible proof<a class="headerlink" href="#reversible-proof" title="Permalink to this heading">#</a></h4>
+<div class="toggle docutils container">
+<p>The Feistel network is a symmetric cryptographic structure that’s commonly used in block cipher algorithms. One of its key features is that the encryption and decryption processes are very similar, requiring only the reversal of the key schedule.</p>
+<p>In a Feistel network, a block of plaintext is divided into two halves, <span class="math notranslate nohighlight">\( L \)</span> (Left) and <span class="math notranslate nohighlight">\( R \)</span> (Right), before undergoing several rounds of processing. Each round involves a subkey and a round function <span class="math notranslate nohighlight">\( f \)</span>, and the process can be summarized for one round as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+L_{\text{new}} &amp;= R \\
+R_{\text{new}} &amp;= L \oplus f(R, K)
+\end{align*}
+\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\( \oplus \)</span> represents the bitwise XOR operation, and <span class="math notranslate nohighlight">\( K \)</span> is the subkey for that round. After all rounds are completed, the <span class="math notranslate nohighlight">\( L \)</span> and <span class="math notranslate nohighlight">\( R \)</span> halves are recombined to form the ciphertext block.</p>
+<p>To decrypt, you essentially perform the reverse process with the subkeys applied in the reverse order. The round operation for decryption can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+R &amp;= L_{\text{new}} \\
+L &amp;= R_{\text{new}} \oplus f(L_{\text{new}}, K)
+\end{align*}
+\end{split}\]</div>
+<p>Let’s see why the Feistel network is decryptable by applying one round of decryption to one round of encryption:</p>
+<ol class="arabic simple">
+<li><p><strong>Encryption</strong>: <span class="math notranslate nohighlight">\( R_{\text{new}} = L \oplus f(R, K) \)</span> and <span class="math notranslate nohighlight">\( L_{\text{new}} = R \)</span></p></li>
+<li><p><strong>Decryption</strong>: <span class="math notranslate nohighlight">\( L = R_{\text{new}} \oplus f(L_{\text{new}}, K) \)</span> and <span class="math notranslate nohighlight">\( R = L_{\text{new}} \)</span></p></li>
+</ol>
+<p>Substitute <span class="math notranslate nohighlight">\( L_{\text{new}} = R \)</span> and <span class="math notranslate nohighlight">\( R_{\text{new}} = L \oplus f(R, K) \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+L = (L \oplus f(R, K)) \oplus f(R, K)
+\]</div>
+<p>Since the XOR operation is its own inverse (<span class="math notranslate nohighlight">\( a \oplus a = 0 \)</span> and <span class="math notranslate nohighlight">\( a \oplus 0 = a \)</span>), this simplifies to:</p>
+<div class="math notranslate nohighlight">
+\[
+L = L \oplus 0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+L = L
+\]</div>
+<p>And similarly for <span class="math notranslate nohighlight">\( R \)</span>, proving that you get your original <span class="math notranslate nohighlight">\( L \)</span> and <span class="math notranslate nohighlight">\( R \)</span> back, i.e., the operation is decryptable.</p>
+<p>This ability to reverse the process, combined with the application of subkeys in reverse order during decryption, is what makes the Feistel network inherently decryptable.</p>
+</div>
+<p><strong>Drawback:</strong></p>
+<ul class="simple">
+<li><p>It’s <strong>inefficient</strong>, as only one-half of the block is modified in every round.</p></li>
+</ul>
+<p>The Feistel Network design transforms only half the data block in each round.
+While this makes the process slower and requires more rounds for thorough
+encryption, it ensures easy decryption and simplicity. This design choice
+balances efficiency with reliability and ease of use.</p>
+</section>
+</section>
+<section id="key-schedule-process-in-des">
+<h3>Key Schedule Process in DES<a class="headerlink" href="#key-schedule-process-in-des" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>The 56-bit main key is divided into two <strong>28-bit</strong> parts.</p></li>
+<li><p>These parts are shifted left by either 1 or 2 bits, based on the specific
+subkey being generated.</p></li>
+<li><p>From these shifted halves, 24 bits are picked from each to produce a <strong>48-bit
+subkey</strong>.</p></li>
+</ol>
+<p>Bit shift &amp; selection is “pseudorandom” due to the specific. These constants
+were chosen based on their random distribution.</p>
+</section>
+<section id="every-round-s-computation-in-des">
+<h3>Every Round’s Computation in DES<a class="headerlink" href="#every-round-s-computation-in-des" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Starts with an expansion permutation, converting <strong>32 bits</strong> to 48 bits.</p></li>
+<li><p>This is then XORed with a 48-bit subkey, generated from the main 56-bit key.</p></li>
+<li><p>The result passes through <strong>S-boxes</strong>, which substitute and reduce it back to 32
+bits.</p></li>
+<li><p>A final permutation <strong>(P-Box)</strong> is applied to these 32 bits.</p></li>
+</ol>
+<p><img alt="Alt text" src="_images/des_round.png" /></p>
+<p>Significantly, the design of the <strong>S-boxes</strong> stands out as the <strong>sole
+non-linear</strong> component in DES. These boxes were intentionally designed to have
+seemingly random properties. Interestingly, their design was influenced by the
+NSA, but the method remains undisclosed.</p>
+</section>
+<section id="issues-with-des">
+<h3>Issues with DES<a class="headerlink" href="#issues-with-des" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Originally, DES’s 56-bit key was sufficient. But as computing power increased,
+it became feasible to brute-force attack this key (trying all <span class="math notranslate nohighlight">\(2^{56}\)</span>
+combinations).</p></li>
+<li><p>Solutions involved running DES multiple times with longer keys. The popular
+3DES uses a 168-bit key, applying DES thrice with 56 bits of the key each run.
+However, 3DES effectively has a security of 112 bits due to certain
+vulnerabilities.</p></li>
+</ul>
+<p><img alt="Alt text" src="_images/3des.png" /></p>
+<p><strong>(Trivia) The “Meet in the middle attack” on 2DES</strong></p>
+<div class="toggle docutils container">
+<p>2DES might seem like an intuitive progression from DES to increase security by
+doubling the key length, but it’s vulnerable to the “meet-in-the-middle attack”.
+Here’s why 3DES was preferred over 2DES:</p>
+<ul class="simple">
+<li><p>In a “meet in the middle attack” on 2DES, if an adversary has a known
+plaintext (PT) and its corresponding ciphertext (CT), they can attempt to
+decrypt the CT using all possible keys for the second DES operation while
+simultaneously encrypting the PT using all possible keys for the first DES
+operation.</p></li>
+<li><p>When the two operations meet in the middle (i.e., the encrypted PT matches the
+decrypted CT), the adversary can be reasonably certain they’ve found the
+correct pair of keys.</p></li>
+<li><p>This means that instead of the <span class="math notranslate nohighlight">\(2^{112}\)</span> operations you might expect from a
+naive analysis of 2DES, an adversary only needs on the order of <span class="math notranslate nohighlight">\(2^{56}\)</span>
+encryption operations and <span class="math notranslate nohighlight">\(2^{56}\)</span> decryption operations (plus some storage to
+keep track of intermediate results), which makes the attack much more
+feasible.</p></li>
+<li><p>This attack trades off increased storage space (to store the results of the
+encryptions and decryptions) against a drastically reduced computational
+effort.</p></li>
+</ul>
+<p>Thus, to counteract this vulnerability, 3DES was introduced, which applies the
+DES algorithm three times with two or three unique keys and isn’t susceptible to
+this type of attack in the same way.</p>
+</div>
+</section>
+</section>
+<section id="cryptosystem-components">
+<h2>Cryptosystem Components<a class="headerlink" href="#cryptosystem-components" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>P (Plaintext Space)</strong>: Represents all possible unencrypted messages.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ P = \text{Set of all unencrypted messages} \]</div>
+<ul class="simple">
+<li><p><strong>C (Ciphertext Space)</strong>: Represents all possible encrypted versions of the
+messages.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ C = \text{Set of all encrypted messages} \]</div>
+<ul class="simple">
+<li><p><strong>K (Key Space)</strong>: Represents all potential keys used for encryption and
+decryption.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ K = \text{Set of all encryption/decryption keys} \]</div>
+<ul class="simple">
+<li><p><strong>E (Encryption Functions)</strong>: Contains a unique encryption function for each
+key in <strong>K</strong>. It defines how plaintext from <strong>P</strong> is encrypted into ciphertext
+in <strong>C</strong>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ E = \{e_k : k \in K\} \text{ for } e_k: P \to C \]</div>
+<ul class="simple">
+<li><p><strong>D (Decryption Functions)</strong>: Contains a unique decryption function for each
+key in <strong>K</strong>. It defines how ciphertext from <strong>C</strong> is decrypted back into
+plaintext in <strong>P</strong>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ D = \{d_k : k \in K\} \text{ for }  d_k: C \to P \]</div>
+<section id="relation-between-encryption-and-decryption">
+<h3>Relation Between Encryption and Decryption**<a class="headerlink" href="#relation-between-encryption-and-decryption" title="Permalink to this heading">#</a></h3>
+<p>For every key <span class="math notranslate nohighlight">\( k \)</span> in <span class="math notranslate nohighlight">\( K \)</span>, and for every plaintext <span class="math notranslate nohighlight">\( x \)</span> in <span class="math notranslate nohighlight">\( P \)</span>, the
+encryption of <span class="math notranslate nohighlight">\( x \)</span> using <span class="math notranslate nohighlight">\( e_k \)</span> followed by its decryption using <span class="math notranslate nohighlight">\( d_k \)</span> gives
+back the original plaintext <span class="math notranslate nohighlight">\( x \)</span>.</p>
+<p>Mathematically,</p>
+<div class="math notranslate nohighlight">
+\[ \forall k \in K, \forall x \in P: d_k(e_k(x)) = x \]</div>
+<p><strong>Description</strong>: This means that encrypting a message and then decrypting it
+with the functions associated with the same key will always reproduce the
+original message.</p>
+</section>
+<section id="defining-the-cryptosystem">
+<h3>Defining the Cryptosystem<a class="headerlink" href="#defining-the-cryptosystem" title="Permalink to this heading">#</a></h3>
+<p>The complete cryptosystem can be represented using the tuple of these five
+components:</p>
+<div class="math notranslate nohighlight">
+\[ \text{Cryptosystem} = (P, C, K, E, D) \]</div>
+<p><strong>Description</strong>: This summarizes the entire encryption-decryption framework,
+outlining the spaces for plaintext, ciphertext, keys, and the associated
+encryption and decryption functions.</p>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Shift Cipher
+<img alt="Alt text" src="_images/cryptospace_caesar.png" />
+<img alt="Alt text" src="_images/key_space_caesar.png" /></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="aes-advanced-encryption-standard">
+<h2>AES (Advanced Encryption Standard)<a class="headerlink" href="#aes-advanced-encryption-standard" title="Permalink to this heading">#</a></h2>
+<p>The Advanced Encryption Standard (AES) is a symmetric encryption algorithm that was established as a standard by the U.S. National Institute of Standards and Technology (NIST) in 2001. Here’s a summarized breakdown of the details provided:</p>
+<p><strong>Requirements</strong></p>
+<div class="toggle docutils container">
+<ul class="simple">
+<li><p>AES should be <strong>publicly</strong> defined (it’s workings would be known to all)</p></li>
+<li><p>AES shall be a <strong>symmetric block cipher</strong> AES shall be designed so that the <strong>key
+length may be increased</strong></p></li>
+<li><p>AES should be implementable in hardware and software</p></li>
+<li><p>AES shall be freely available</p></li>
+</ul>
+</div>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Variable Key and Block Lengths</strong>:</p>
+<ul class="simple">
+<li><p>AES supports key lengths of 128, 192, or 256 bits.</p></li>
+<li><p>It can operate on blocks of 128, 192, or 256 bits.</p></li>
+<li><p>While <strong>any combination</strong> of key and block length is possible, standard AES uses a fixed block size of 128 bits and varying key sizes (128, 192, 256 bits).</p></li>
+<li><p>Extensions exist that allow it to handle block and key lengths of 160 and 224 bits.</p></li>
+</ul>
+</li>
+<li><p><strong>State Matrix</strong>:</p>
+<ul class="simple">
+<li><p>The input block is transformed into a matrix of bytes referred to as the “<strong>state.</strong>”</p></li>
+<li><p>This matrix always has <strong>4 rows</strong> and a <strong>variable number of columns</strong> based on the block’s size.</p></li>
+<li><p>Standard AES uses a block size of 128 bits, which means a <span class="math notranslate nohighlight">\(4 \times 4\)</span> state matrix.</p>
+<ul>
+<li><p><strong>128 bits = 16 bytes.</strong></p></li>
+<li><p>To fit all 16 bytes into this matrix, it needs <strong>4 columns</strong> (because <span class="math notranslate nohighlight">\(4 \times 4 = 16\)</span>).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="structure-of-aes">
+<h3>Structure of AES<a class="headerlink" href="#structure-of-aes" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Rounds</strong>:</p>
+<ul>
+<li><p>Just like DES (Data Encryption Standard), AES operates in multiple rounds.</p></li>
+<li><p>The number of rounds AES uses depends on the key length:</p>
+<ul>
+<li><p>10 rounds for 128-bit key</p></li>
+<li><p>12 rounds for 192-bit key</p></li>
+<li><p>14 rounds for 256-bit key</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="Alt text" src="_images/image.png" /></p>
+<ul class="simple">
+<li><p><strong>Stages of Each Round</strong>:
+Each round in AES comprises four stages:</p>
+<ol class="arabic simple">
+<li><p><strong>Byte Substitution Transformation (ByteSub)</strong>: Non-linear substitution
+step where each byte is replaced with another according to a lookup
+table.</p></li>
+<li><p><strong>Shift Rows Transformation (ShiftRows)</strong>: A transposition step where the
+The last three rows of the state are shifted cyclically.</p></li>
+<li><p><strong>Mix Column Transformation (MixColumns)</strong>: A mixing operation that
+operates on the columns of the state, combining the four bytes in each
+column.</p></li>
+<li><p><strong>Round Key Addition (AddRoundKey)</strong>: The subkey is combined with the
+state using the bitwise <code class="docutils literal notranslate"><span class="pre">XOR</span></code> operation.</p></li>
+</ol>
+</li>
+</ul>
+<section id="byte-substitution-transformation">
+<h4>Byte Substitution Transformation<a class="headerlink" href="#byte-substitution-transformation" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>A <strong>non-linear</strong> byte by byte substitution. The same substitution is performed on every byte.</p></li>
+<li><p>The substitution is based on a mathematical inverse and
+then an affine function (<strong>multiply + addition</strong>).</p></li>
+<li><p>In practice, this is usually done via a 128 (<span class="math notranslate nohighlight">\(2^8\)</span>) entry lookup table called an <strong>S-box</strong>.
+<img alt="Alt text" src="_images/image-2.png" /></p></li>
+</ul>
+</section>
+<section id="shift-rows-transformation">
+<h4>Shift Rows Transformation<a class="headerlink" href="#shift-rows-transformation" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Each row in the state is then shifted (cyclically) by a specified offset based
+on the block size.
+<img alt="Alt text" src="_images/image-3.png" /></p></li>
+</ul>
+</section>
+<section id="mix-column-transformation">
+<h4>Mix Column Transformation<a class="headerlink" href="#mix-column-transformation" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Each column in the state is applied with the following matrix multiplication:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+b_0 \\
+b_1 \\
+b_2 \\
+b_3 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+02 &amp; 03 &amp; 01 &amp; 01 \\
+01 &amp; 02 &amp; 03 &amp; 01 \\
+01 &amp; 01 &amp; 02 &amp; 03 \\
+03 &amp; 01 &amp; 01 &amp; 02 \\
+\end{bmatrix}
+\begin{bmatrix}
+a_0 \\
+a_1 \\
+a_2 \\
+a_3 \\
+\end{bmatrix}
+\end{split}\]</div>
+<p><img alt="Alt text" src="_images/image-4.png" /></p>
+</section>
+<section id="round-key-addition">
+<h4>Round Key Addition<a class="headerlink" href="#round-key-addition" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>Generating round keys from the original key for each round using a <strong>key schedule algorithm</strong>.</p></li>
+<li><p>Each byte of the state is then <code class="docutils literal notranslate"><span class="pre">XOR</span></code>’ed with the corresponding byte of the round key to produce the input for the next round.</p></li>
+</ol>
+<p>In matrix notation, given the state matrix <span class="math notranslate nohighlight">\( a \)</span> and the round key matrix <span class="math notranslate nohighlight">\( k \)</span>, the result after the <code class="docutils literal notranslate"><span class="pre">XOR</span></code> operation, <span class="math notranslate nohighlight">\( b \)</span>, can be represented as:</p>
+<div class="math notranslate nohighlight">
+\[ b = a \oplus k \]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( a \)</span> is the current state matrix.</p></li>
+<li><p><span class="math notranslate nohighlight">\( k \)</span> is the round key matrix.</p></li>
+<li><p><span class="math notranslate nohighlight">\( b \)</span> is the resulting state matrix after <code class="docutils literal notranslate"><span class="pre">XOR</span></code>’ing.</p></li>
+</ul>
+<p>The above operation is performed for each round of the AES encryption process.
+<img alt="Alt text" src="_images/image-5.png" /></p>
+</section>
+</section>
+</section>
+<section id="block-cipher-encryption-modes-summary">
+<h2>Block Cipher Encryption Modes Summary<a class="headerlink" href="#block-cipher-encryption-modes-summary" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Block ciphers are often utilized to encrypt data chunks larger than a block.
+The challenge is to do this securely.</p></li>
+<li><p>Different modes of block ciphers exist. Their distinctions lie in the following:</p>
+<ol class="arabic simple">
+<li><p><strong>Security</strong>: Determined by their security attributes.</p></li>
+<li><p><strong>Performance</strong>: Evaluated by the supported throughput.</p></li>
+<li><p><strong>Error Propagation</strong>: Effect of bit errors during the transmission of the cipher text.</p></li>
+<li><p><strong>Error Recovery</strong>: Focused on recovering from transmission errors and
+determining the amount of data that needs retransmission.</p></li>
+</ol>
+</li>
+</ul>
+<section id="electronic-codebook-ecb-mode">
+<h3>Electronic Codebook (ECB) Mode<a class="headerlink" href="#electronic-codebook-ecb-mode" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Overview</strong>:</p>
+<ul class="simple">
+<li><p>ECB mode is the simplest encryption mode.</p></li>
+<li><p>Messages are divided into block-sized chunks.</p></li>
+<li><p>Padding is added to the final block if necessary.</p></li>
+<li><p>Each chunk is encrypted on its own.</p></li>
+</ul>
+</li>
+<li><p><strong>Properties</strong>:</p>
+<ol class="arabic">
+<li><p><strong>Security</strong>: Poor</p>
+<ul class="simple">
+<li><p>ECB offers weak security.</p></li>
+<li><p>An adversary can add, remove, or reorder blocks.</p></li>
+<li><p>Identical plaintext blocks produce identical ciphertext blocks, revealing data patterns.</p></li>
+</ul>
+<p><img alt="Alt text" src="_images/image-6.png" /></p>
+</li>
+<li><p><strong>Performance</strong>: High</p>
+<ul class="simple">
+<li><p>Highly parallelizable as each block is encrypted independently.</p></li>
+<li><p>Throughput is directly tied to the block cipher’s speed.</p></li>
+</ul>
+</li>
+<li><p><strong>Error Propagation</strong>: Confinded to the impacted block.</p>
+<ul class="simple">
+<li><p>Transmission errors in ciphertext only influence the associated plaintext block, leading to random changes in the block.</p></li>
+</ul>
+</li>
+<li><p><strong>Error Recovery</strong>: Easy</p>
+<ul class="simple">
+<li><p>Errors are confined to the impacted block.</p></li>
+<li><p>Blocks before and after the error remain unaffected and are decrypted correctly.</p></li>
+<li><p>Only the affected blocks need to be retransmitted.</p></li>
+<li><p>Decryption continues by skipping the faulty blocks.</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="cipher-block-chaining-cbc-mode">
+<h3>Cipher Block Chaining (CBC) Mode<a class="headerlink" href="#cipher-block-chaining-cbc-mode" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Overview</strong>:</p>
+<ul class="simple">
+<li><p>CBC mode links each block’s encryption to the previous block’s ciphertext.</p></li>
+<li><p>An Initial Value (IV) is used for the first block. While IV doesn’t need to be a secret, it’s vital to avoid using the same IV repeatedly.</p></li>
+</ul>
+<p><img alt="Alt text" src="_images/image-7.png" /></p>
+</li>
+<li><p><strong>Properties</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Security</strong>: Strong</p>
+<ul class="simple">
+<li><p>CBC provides robust security.</p></li>
+<li><p>Any alteration in the plaintext impacts all subsequent blocks.</p></li>
+<li><p>Identical plaintext blocks produce different ciphertext blocks due to the chaining.</p></li>
+</ul>
+</li>
+<li><p><strong>Performance</strong>: Encryption is slow, but decryption is fast.</p>
+<ul class="simple">
+<li><p>Encryption has to be sequential, with no possibility for parallelization.</p></li>
+<li><p>However, decryption can be performed in parallel.</p></li>
+</ul>
+</li>
+<li><p><strong>Error Propagation</strong>: Local</p>
+<ul class="simple">
+<li><p>Transmission errors influence both the current block and the next block.</p></li>
+</ul>
+</li>
+<li><p><strong>Error Recovery</strong>: Easy</p>
+<ul class="simple">
+<li><p>The receiver has the option to omit the affected blocks and proceed with decryption.</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+</section>
+<section id="ways-around-ciphers-like-aes">
+<h2>Ways Around Ciphers like AES?<a class="headerlink" href="#ways-around-ciphers-like-aes" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>One thing to note is that attackers often employ tactics that don’t adhere to the expected “rules” – in short, attackers always cheat!</p></li>
+</ul>
+</section>
+<section id="side-channels">
+<h2>Side Channels<a class="headerlink" href="#side-channels" title="Permalink to this heading">#</a></h2>
+<p>Side-channel cryptanalysis represents a category of attacks targeting
+cryptosystems. Instead of directly attacking the cryptographic algorithm, these
+attacks exploit the information inadvertently emitted as a result of the
+physical implementation of the system.</p>
+<ul class="simple">
+<li><p>Characteristics that attackers might observe or measure include:</p>
+<ul>
+<li><p>Time taken by certain operations.</p></li>
+<li><p>Power consumption patterns.</p></li>
+<li><p>Noise emitted during processes.</p></li>
+<li><p>Heat generated.</p></li>
+<li><p>Electromagnetic radiation produced.</p></li>
+<li><p>Among others…</p></li>
+</ul>
+</li>
+</ul>
+<p>This means that even if the algorithm itself is theoretically secure, its physical implementation might introduce vulnerabilities.</p>
+<section id="id1">
+<h3>Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://johoe.mooo.com/trezor-power-analysis/">Extracting private keys from hardware by analyzing its power usage</a></p>
+<ul class="simple">
+<li><p><img alt="Alt text" src="_images/image-11.png" /></p></li>
+<li><p><img alt="Alt text" src="_images/image-8.png" /></p></li>
+<li><p><img alt="Alt text" src="_images/image-9.png" /></p></li>
+<li><p><img alt="Alt text" src="_images/image-10.png" /></p></li>
+</ul>
+</section>
+</section>
+<section id="timing-side-channel-attack">
+<h2>Timing Side Channel Attack<a class="headerlink" href="#timing-side-channel-attack" title="Permalink to this heading">#</a></h2>
+<p>The exploitation of timing differences, or timing attacks, is a subset of
+side-channel attacks where the attacker tries to discover sensitive information
+by observing and analyzing the time it takes for a system to process different
+operations.</p>
+<p>Here’s how a timing difference can lead to an attack:</p>
+<ol class="arabic simple">
+<li><p><strong>Information Leakage</strong>: At the most basic level, timing attacks exploit the
+fact that different operations or processes may take different amounts of
+time. By precisely measuring the time it takes for a system to respond to
+various inputs, an attacker can infer information about the system’s internal
+operations.</p></li>
+<li><p><strong>Pattern Recognition</strong>: Over multiple observations, attackers can recognize
+patterns in timing differences. These patterns can reveal information about
+the <strong>underlying algorithms</strong> or even <strong>secret keys</strong> used within cryptographic
+operations.</p></li>
+<li><p><strong>Variable vs. Constant Time Operations</strong>: Ideally, cryptographic operations
+should take a The exploitation of timing differences, or timing attacks, is a
+subset of side-channel attacks where the attacker tries to discover sensitive
+information by observing and analyzing the time it takes for a system to
+process different operations.</p></li>
+</ol>
+<p>Here’s how a timing difference can lead to an attack:</p>
+<ol class="arabic simple">
+<li><p><strong>Information Leakage</strong>: At the most basic level, timing attacks exploit the
+fact that different operations or processes may take different amounts of
+time. By precisely measuring the time it takes for a system to respond to
+various inputs, an attacker can infer information about the system’s internal
+operations.</p></li>
+<li><p><strong>Pattern Recognition</strong>: Over multiple observations, attackers can recognize
+patterns in timing differences. These patterns can reveal information about
+the underlying algorithms or even secret keys used within cryptographic
+operations.</p></li>
+<li><p><strong>Variable vs. Constant Time Operations</strong>: <strong>Ideally</strong>, cryptographic
+operations should take a <strong>constant amount of time</strong> regardless of the input
+or any secret values (like cryptographic keys). However, certain operations,
+such as looking up values in a table or conditional branches based on secret
+data, might vary in execution time. These variations can leak information.</p></li>
+<li><p><strong>Example with MACs</strong>: Let’s say an attacker sends an <strong>incorrect MAC</strong> to a
+system and observes how long the system takes to reject it. If the system
+checks each bit or byte of the MAC <strong>sequentially</strong> and stops checking once
+it finds an incorrect bit/byte, then a MAC that’s rejected more quickly
+indicates that it was incorrect earlier in its sequence. By trying many such
+MACs and measuring the rejection times, an attacker can potentially deduce
+the correct MAC bit-by-bit or byte-by-byte.</p></li>
+<li><p><strong>Real-world Scenario with Xbox 360</strong>: In the case of the Xbox 360 mentioned
+earlier, if the system took longer to reject certain malicious updates than
+others, it indicates to the attacker that a part of their malicious update
+was closer to being correct. By iteratively adjusting and resending updates
+while observing rejection times, they could progressively craft an update
+that the system would accept.</p></li>
+<li><p><strong>Mitigations</strong>: To prevent timing attacks, developers can ensure that their
+systems process data in constant time, irrespective of input values. This
+means that the time taken for any operation should remain the same, whether
+the input is entirely correct, entirely wrong, or anywhere in between.</p></li>
+</ol>
+<p>In summary, timing attacks hinge on the principle that “how long something takes
+can reveal what’s happening behind the scenes.” <strong>Small, consistent
+differences</strong> in timing can be exploited by attackers to reveal sensitive
+internal information or processes. of time regardless of the input or any secret
+values (like cryptographic keys). However, certain operations, such as looking
+up values in a table or conditional branches based on secret data, might vary in
+execution time. These variations can leak information.</p>
+<section id="code">
+<h3>Code<a class="headerlink" href="#code" title="Permalink to this heading">#</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">naive_mac_check</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">correct</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">correct</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">strcmp</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">s2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">s1</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="w"> </span><span class="o">&amp;&amp;*</span><span class="n">s1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">*</span><span class="n">s2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">s1</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="n">s2</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">s1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">*</span><span class="n">s2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="exploitation">
+<h3>Exploitation<a class="headerlink" href="#exploitation" title="Permalink to this heading">#</a></h3>
+<p>The slides provided discuss various aspects of the AES (Advanced Encryption Standard) implementation, particularly focusing on the T-Table approach. Let’s break down the content slide by slide:</p>
+<ol class="arabic">
+<li><p><strong>Revisit AES Implementation</strong>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X_i\)</span> is the input data for the round and <span class="math notranslate nohighlight">\(K_i\)</span> is the round key.</p></li>
+<li><p>The operations for a single round include:</p>
+<ul>
+<li><p><strong>SubBytes</strong>: This step substitutes each byte in the block with another byte from the AES substitution box (S-box).</p></li>
+<li><p><strong>ShiftRows</strong>: This operation cyclically shifts the rows of the state.</p></li>
+<li><p><strong>MixColumns</strong>: This step mixes up the columns, providing diffusion in the cipher.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">XOR</span></code> with Round Key</strong>: The result from the above operations is then <code class="docutils literal notranslate"><span class="pre">XOR</span></code>ed with the round key <span class="math notranslate nohighlight">\(K_i\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="Alt text" src="_images/image-12.png" /></p>
+</li>
+<li><p><strong>T-Table Details of AES</strong>:</p>
+<p><img alt="Alt text" src="_images/image-14.png" /></p>
+<ul class="simple">
+<li><p><strong>Rijndael and T-tables</strong>:</p>
+<ul>
+<li><p>Rijndael is the name of the cipher selected as AES. The slide mentions that this implementation follows the approach proposed with Rijndael and is now widely used, which is using T-tables to optimize the AES algorithm in software.</p></li>
+<li><p>T-tables are precomputed tables that combine multiple steps of the AES round into a single lookup, providing a speed-up.</p></li>
+</ul>
+</li>
+<li><p><strong>The T-tables Computation</strong>:</p>
+<ul>
+<li><p>The equation <span class="math notranslate nohighlight">\(X^{i+1}\)</span> describes the state of the data after processing it through one round of AES encryption.</p></li>
+<li><p>The T-tables <span class="math notranslate nohighlight">\(T_0\)</span>, <span class="math notranslate nohighlight">\(T_1\)</span>, <span class="math notranslate nohighlight">\(T_2\)</span>, and <span class="math notranslate nohighlight">\(T_3\)</span> are used to perform the SubBytes, ShiftRows, and MixColumns steps of the AES round in a single operation. They are indexed by byte values from the current state, represented as <span class="math notranslate nohighlight">\(x^i_j\)</span>, where <span class="math notranslate nohighlight">\(i\)</span> is the round number and <span class="math notranslate nohighlight">\(j\)</span> is the byte’s position within the state.</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(\oplus\)</span> symbol represents the bitwise <code class="docutils literal notranslate"><span class="pre">XOR</span></code> operation.</p></li>
+</ul>
+</li>
+<li><p><strong>Process Breakdown</strong>:</p>
+<ul>
+<li><p>For each line in the equation, we see that byte values from the current state (<span class="math notranslate nohighlight">\(x^i_j\)</span>) are used as indices to lookup values in the T-tables.</p></li>
+<li><p>These looked-up values are then <code class="docutils literal notranslate"><span class="pre">XOR</span></code>’ed together with round key bytes <span class="math notranslate nohighlight">\(k^i_j\)</span>.</p></li>
+<li><p>The result of this operation updates the state matrix for the next round, represented as <span class="math notranslate nohighlight">\(X^{i+1}\)</span>.</p></li>
+</ul>
+</li>
+<li><p><strong>Relation to AES</strong>:</p>
+<ul>
+<li><p>Normally, in AES, the SubBytes step involves a byte-by-byte
+substitution from the S-box. The ShiftRows step rotates the rows of
+the state, and the MixColumns step mixes the columns. Finally, the
+AddRoundKey step <code class="docutils literal notranslate"><span class="pre">XOR</span></code>s the round key with the state.</p></li>
+<li><p>In this T-table optimized approach, the SubBytes, ShiftRows, and
+MixColumns operations are merged into one table lookup. The result of
+the lookup is then <code class="docutils literal notranslate"><span class="pre">XOR</span></code>’ed with the round key (AddRoundKey step).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>T-Table Implementation in AES</strong>:</p>
+<p><img alt="Alt text" src="_images/image-13.png" /></p>
+<ul class="simple">
+<li><p><strong>T-table Computations</strong>:</p>
+<ul>
+<li><p>The T-tables are denoted as <code class="docutils literal notranslate"><span class="pre">Te0</span></code>, <code class="docutils literal notranslate"><span class="pre">Te1</span></code>, <code class="docutils literal notranslate"><span class="pre">Te2</span></code>, and <code class="docutils literal notranslate"><span class="pre">Te3</span></code>.</p></li>
+<li><p>For each of the four words (t0, t1, t2, t3) in the state matrix, there
+are corresponding calculations involving these T-tables. Each word from
+the state matrix (e.g., <code class="docutils literal notranslate"><span class="pre">s0</span></code>, <code class="docutils literal notranslate"><span class="pre">s1</span></code>, <code class="docutils literal notranslate"><span class="pre">s2</span></code>, <code class="docutils literal notranslate"><span class="pre">s3</span></code>) is broken down into
+bytes.</p></li>
+<li><p>The bitwise right shift operation (e.g., <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span> <span class="pre">24</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span> <span class="pre">16</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span> <span class="pre">8</span></code>) and
+the bitwise AND operation with <code class="docutils literal notranslate"><span class="pre">0xff</span></code> are used to extract specific
+bytes from the words.</p></li>
+<li><p>These bytes are then used to index into the T-tables, and the results
+from the tables are <code class="docutils literal notranslate"><span class="pre">XOR</span></code>ed together to produce each word in the updated
+state matrix.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">rk</span></code> variables represent the round keywords, which are <code class="docutils literal notranslate"><span class="pre">XOR</span></code>ed with
+the results to complete the round transformation.</p></li>
+</ul>
+</li>
+<li><p><strong>Example of a T-table Array</strong>:</p>
+<ul>
+<li><p>The slide gives an example of the <code class="docutils literal notranslate"><span class="pre">Te0</span></code> table, which contains <strong>256
+precomputed 32-bit values</strong>. These values are the results of multiple
+AES operations combined, which speeds up the encryption process when
+used in the T-table lookup method.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="analysis-of-t-table-lookups">
+<h3>Analysis of t-table lookups<a class="headerlink" href="#analysis-of-t-table-lookups" title="Permalink to this heading">#</a></h3>
+<p><img alt="alt text" src="_images/image-15.png" /></p>
+<ol class="arabic">
+<li><p><strong>plaintext and key <code class="docutils literal notranslate"><span class="pre">XOR</span></code></strong>:</p>
+<ul class="simple">
+<li><p>the illustration depicts the plaintext (in blue) and its interaction with the key (in red) via the <code class="docutils literal notranslate"><span class="pre">XOR</span></code> operation.</p></li>
+</ul>
+</li>
+<li><p><strong>t-table lookup flow</strong>:</p>
+<ul class="simple">
+<li><p>after <code class="docutils literal notranslate"><span class="pre">XOR</span></code>ing the plaintext with the key, specific parts of the result are used to perform lookups in the t-tables. this is represented by the arrows pointing to the “t-table lookup” bar.</p></li>
+</ul>
+</li>
+<li><p><strong>t-table lookup equations</strong>:</p>
+<ul>
+<li><p><strong>If</strong> <span class="math notranslate nohighlight">\(T(p_i \oplus k_i) = T(p_i \oplus k_j) \)</span>:</p></li>
+<li><p><strong>then</strong> <span class="math notranslate nohighlight">\( p_i \oplus k_i = p_i \oplus k_j \)</span>:</p>
+<p>If both sides of the equation are equal, it implies either <span class="math notranslate nohighlight">\( k_i = k_j \)</span>
+or there’s some relationship between the plaintext and the keys that
+makes this equation hold true.</p>
+</li>
+<li><p><span class="math notranslate nohighlight">\( p_i \oplus p_i = k_i \oplus k_j \)</span>:</p>
+<p>This equation demonstrates a fundamental property of <code class="docutils literal notranslate"><span class="pre">XOR</span></code>: any value <code class="docutils literal notranslate"><span class="pre">XOR</span></code>ed
+with itself yields 0. This means that <span class="math notranslate nohighlight">\( p_i \oplus p_i \)</span> is 0 and <span class="math notranslate nohighlight">\( k_i
+ \oplus k_j \)</span> is also 0, which further implies <span class="math notranslate nohighlight">\( k_i = k_j \)</span> for this
+equation to hold true. Essentially, both sides of the equation will yield
+the value 0.</p>
+</li>
+</ul>
+</li>
+</ol>
+<section id="exploit-cache-timing-channel">
+<h4>Exploit Cache Timing Channel<a class="headerlink" href="#exploit-cache-timing-channel" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>In order to know if <span class="math notranslate nohighlight">\(x=y\)</span> for <span class="math notranslate nohighlight">\(T(x)=T(y)\)</span>, we can use a cache timing channel.</p></li>
+</ul>
+<p>A <strong>cache timing channel attack</strong> exploits the time taken
+to retrieve a memory value to infer something about the system’s state. When
+data is in the cache (a small, faster type of memory), accessing it is faster
+than when it’s in the main memory. So, by measuring how long it takes to access
+certain information, an attacker might determine whether a specific operation
+was performed or deduce the value of a secret key in use.</p>
+<p>In simple terms, <strong>if two values x and y lead to the same location</strong> in the T-table,
+accessing one after the other would be <strong>faster</strong> than if they were located in
+different parts of the memory. By observing these timing differences, one can
+infer that x=y for the given T-table lookups.</p>
+<p><img alt="Alt text" src="_images/image-16.png" />
+<img alt="Alt text" src="_images/image-17.png" />
+<img alt="Alt text" src="_images/image-18.png" />
+<img alt="Alt text" src="_images/image-19.png" /></p>
+</section>
+<section id="implementation-of-attack">
+<h4>Implementation of Attack<a class="headerlink" href="#implementation-of-attack" title="Permalink to this heading">#</a></h4>
+<p>The provided diagram represents the “Implementation of Cache Attack,” a type of side-channel attack where the attacker exploits the behaviour of the system cache to gain insights into a victim’s operations. Let’s break it down:</p>
+<p><img alt="Alt text" src="_images/image-20.png" /></p>
+<ol class="arabic simple">
+<li><p><strong>Execution</strong>:</p>
+<ul class="simple">
+<li><p>This represents the timeline of events or the sequence of actions taken by
+the attacker and the victim.</p></li>
+</ul>
+</li>
+<li><p><strong>Attacker Prime</strong>:</p>
+<ul class="simple">
+<li><p>At this stage, the attacker intentionally accesses specific memory
+locations. The purpose of this action is to “prime” the cache, filling it
+with data that the attacker knows and controls.</p></li>
+<li><p>When the attacker accesses these memory locations, the related cache lines
+are loaded with the attacker’s data. This effectively establishes a known
+state for the cache.</p></li>
+</ul>
+</li>
+<li><p><strong>Victim Access</strong>:</p>
+<ul class="simple">
+<li><p>After the attacker primes the cache, the victim’s process or application
+(which could be any operation, but often an encryption operation in this
+context) runs.</p></li>
+<li><p>As the victim’s process accesses memory, certain cache lines may be
+displaced or overwritten with new data. This is because the cache has a
+limited size, and when new data is loaded into the cache, some old data
+has to be evicted.</p></li>
+<li><p>The cache lines that get evicted and loaded with the victim’s data can
+provide hints about which memory locations the victim accessed.</p></li>
+</ul>
+</li>
+<li><p><strong>Attacker Probe</strong>:</p>
+<ul class="simple">
+<li><p>Following the victim’s access, the attacker probes the same memory
+locations that were initially primed.</p></li>
+<li><p>By measuring the time it takes to access each location, the attacker can
+determine which locations were accessed by the victim:</p>
+<ul>
+<li><p>If the access is fast (cache hit), it implies that the victim didn’t
+access that memory location, and the data in the cache is still from
+the attacker’s initial prime.</p></li>
+<li><p>If the access is slower (cache miss), it suggests the victim did
+access that location, causing the attacker’s data to be evicted from
+the cache and replaced with the victim’s data.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Cache</strong>:</p>
+<ul class="simple">
+<li><p>The cache is divided into multiple “cache lines,” which are slots where
+data from memory can be stored for faster access.</p></li>
+<li><p>In this illustration, there are eight cache lines (from Cache line 0 to
+Cache line 7). The arrows show the flow of data as it’s loaded into the
+cache during the various stages.</p></li>
+</ul>
+</li>
+<li><p><strong>Time</strong>:</p>
+<ul class="simple">
+<li><p>The horizontal progression represents the chronological sequence of
+events, starting with the attacker’s prime, followed by the victim’s
+access, and finally, the attacker’s probe.</p></li>
+</ul>
+</li>
+</ol>
+<p>In summary, by strategically priming the cache and then observing the effects of
+the victim’s operations on the cache, an attacker can infer information about
+the victim’s activities. For instance, in cryptographic contexts, such patterns
+can potentially reveal information about cryptographic keys or algorithms being
+used. This side-channel attack exploits the unintended information leakage from
+the hardware behaviour rather than directly breaking the cryptographic process.</p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ciphers">Ciphers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trapdoor-one-way-functions">Trapdoor one-way functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kerckhoff-s-principle">Kerckhoff’s Principle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#substitution-ciphers-and-caesar-shift-cipher">Substitution Ciphers and Caesar (Shift) Cipher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strength-of-a-cipher">Strength of a Cipher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attacks-on-substitution-ciphers">Attacks on substitution ciphers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poly-alphabetic-periodic-cipher">Poly-alphabetic/Periodic Cipher</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attack">Attack</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-time-pad-otp-vernam-cipher">One Time Pad (OTP) / Vernam Cipher</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disadvantages">Disadvantages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strength-levels">Strength levels</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-ciphers-requirements">Practical Ciphers Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetric-key-ciphers">Symmetric Key Ciphers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#block-ciphers">Block Ciphers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stream-ciphers">Stream Ciphers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-prevalence">Usage Prevalence</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cryptosystem-techniques">Cryptosystem Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion">Confusion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion">Diffusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xor-properties"><code class="docutils literal notranslate"><span class="pre">XOR</span></code> Properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-block-ciphers">Common Block Ciphers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#des-data-encryption-standard">DES (Data Encryption Standard)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feistel-network-overview">Feistel Network Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reversible-proof">Reversible proof</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-schedule-process-in-des">Key Schedule Process in DES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#every-round-s-computation-in-des">Every Round’s Computation in DES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issues-with-des">Issues with DES</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cryptosystem-components">Cryptosystem Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-encryption-and-decryption">Relation Between Encryption and Decryption**</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-the-cryptosystem">Defining the Cryptosystem</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aes-advanced-encryption-standard">AES (Advanced Encryption Standard)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structure-of-aes">Structure of AES</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#byte-substitution-transformation">Byte Substitution Transformation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#shift-rows-transformation">Shift Rows Transformation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mix-column-transformation">Mix Column Transformation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#round-key-addition">Round Key Addition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#block-cipher-encryption-modes-summary">Block Cipher Encryption Modes Summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#electronic-codebook-ecb-mode">Electronic Codebook (ECB) Mode</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cipher-block-chaining-cbc-mode">Cipher Block Chaining (CBC) Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ways-around-ciphers-like-aes">Ways Around Ciphers like AES?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#side-channels">Side Channels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#timing-side-channel-attack">Timing Side Channel Attack</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploitation">Exploitation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-t-table-lookups">Analysis of t-table lookups</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#exploit-cache-timing-channel">Exploit Cache Timing Channel</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-of-attack">Implementation of Attack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
