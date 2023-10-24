@@ -303,7 +303,7 @@ The **Data Encryption Standard (DES)** has a **56-bit key** and operates on **64
   - The outcome of a round is the input for the subsequent one.
 - This pattern is executed for **16 rounds** as per the DES standard.
 
-![Alt text](./images/feistel_network_diagram.png)
+![Alt text](./images/cryptography/feistel_network_diagram.png)
 
 ### Feistel Network Overview
 
@@ -407,7 +407,7 @@ were chosen based on their random distribution.
    bits.
 4. A final permutation **(P-Box)** is applied to these 32 bits.
 
-![Alt text](images/des_round.png)
+![Alt text](images/cryptography/des_round.png)
 
 Significantly, the design of the **S-boxes** stands out as the **sole
 non-linear** component in DES. These boxes were intentionally designed to have
@@ -424,7 +424,7 @@ NSA, but the method remains undisclosed.
   However, 3DES effectively has a security of 112 bits due to certain
   vulnerabilities.
   
-![Alt text](images/3des.png)
+![Alt text](images/cryptography/3des.png)
 
 **(Trivia) The "Meet in the middle attack" on 2DES**
 
@@ -514,8 +514,8 @@ encryption and decryption functions.
 #### Example
 
 - Shift Cipher
-![Alt text](./images/cryptospace_caesar.png)
-![Alt text](./images/key_space_caesar.png)
+![Alt text](./images/cryptography/cryptospace_caesar.png)
+![Alt text](./images/cryptography/key_space_caesar.png)
 
 ## AES (Advanced Encryption Standard)
 
@@ -555,7 +555,7 @@ The Advanced Encryption Standard (AES) is a symmetric encryption algorithm that 
     - 12 rounds for 192-bit key
     - 14 rounds for 256-bit key
 
-![Alt text](images/image.png)
+![Alt text](images/cryptography/image.png)
 
 - **Stages of Each Round**:
 Each round in AES comprises four stages:
@@ -579,13 +579,13 @@ Each round in AES comprises four stages:
 then an affine function (**multiply + addition**).
 
 - In practice, this is usually done via a 128 ($2^8$) entry lookup table called an **S-box**.
-![Alt text](images/image-2.png)
+![Alt text](images/cryptography/image-2.png)
 
 #### Shift Rows Transformation
 
 - Each row in the state is then shifted (cyclically) by a specified offset based
   on the block size.
-![Alt text](images/image-3.png)
+![Alt text](images/cryptography/image-3.png)
 
 #### Mix Column Transformation
 
@@ -613,7 +613,7 @@ a_3 \\
 \end{bmatrix}
 $$
 
-![Alt text](images/image-4.png)
+![Alt text](images/cryptography/image-4.png)
 
 #### Round Key Addition
 
@@ -631,7 +631,7 @@ Where:
 - $ b $ is the resulting state matrix after `XOR`'ing.
 
 The above operation is performed for each round of the AES encryption process.
-![Alt text](images/image-5.png)
+![Alt text](images/cryptography/image-5.png)
 
 ## Block Cipher Encryption Modes Summary
 
@@ -659,7 +659,7 @@ The above operation is performed for each round of the AES encryption process.
      - An adversary can add, remove, or reorder blocks.
      - Identical plaintext blocks produce identical ciphertext blocks, revealing data patterns.
 
-     ![Alt text](images/image-6.png)
+     ![Alt text](images/cryptography/image-6.png)
   2. **Performance**: High
      - Highly parallelizable as each block is encrypted independently.
      - Throughput is directly tied to the block cipher's speed.
@@ -677,7 +677,7 @@ The above operation is performed for each round of the AES encryption process.
   - CBC mode links each block's encryption to the previous block's ciphertext.
   - An Initial Value (IV) is used for the first block. While IV doesn't need to be a secret, it's vital to avoid using the same IV repeatedly.
   
-  ![Alt text](images/image-7.png)
+  ![Alt text](images/cryptography/image-7.png)
 
 - **Properties**:
   1. **Security**: Strong
@@ -717,10 +717,10 @@ This means that even if the algorithm itself is theoretically secure, its physic
 
 [Extracting private keys from hardware by analyzing its power usage]( https://johoe.mooo.com/trezor-power-analysis/)
 
-- ![Alt text](images/image-11.png)
-- ![Alt text](images/image-8.png)
-- ![Alt text](images/image-9.png)
-- ![Alt text](images/image-10.png)
+- ![Alt text](images/cryptography/image-11.png)
+- ![Alt text](images/cryptography/image-8.png)
+- ![Alt text](images/cryptography/image-9.png)
+- ![Alt text](images/cryptography/image-10.png)
 
 ## Timing Side Channel Attack
 
@@ -823,11 +823,11 @@ The slides provided discuss various aspects of the AES (Advanced Encryption Stan
         - **MixColumns**: This step mixes up the columns, providing diffusion in the cipher.
         - **`XOR` with Round Key**: The result from the above operations is then `XOR`ed with the round key $K_i$.
 
-    ![Alt text](images/image-12.png)
+    ![Alt text](images/cryptography/image-12.png)
 
 2. **T-Table Details of AES**:
 
-    ![Alt text](images/image-14.png)
+    ![Alt text](images/cryptography/image-14.png)
 
     - **Rijndael and T-tables**:
         - Rijndael is the name of the cipher selected as AES. The slide mentions that this implementation follows the approach proposed with Rijndael and is now widely used, which is using T-tables to optimize the AES algorithm in software.
@@ -854,7 +854,7 @@ The slides provided discuss various aspects of the AES (Advanced Encryption Stan
 
 3. **T-Table Implementation in AES**:
 
-    ![Alt text](images/image-13.png)
+    ![Alt text](images/cryptography/image-13.png)
     - **T-table Computations**:
        - The T-tables are denoted as `Te0`, `Te1`, `Te2`, and `Te3`.
        - For each of the four words (t0, t1, t2, t3) in the state matrix, there
@@ -878,7 +878,7 @@ The slides provided discuss various aspects of the AES (Advanced Encryption Stan
 
 ### Analysis of t-table lookups
 
-![alt text](images/image-15.png)
+![alt text](images/cryptography/image-15.png)
 
 1. **plaintext and key `XOR`**:
    - the illustration depicts the plaintext (in blue) and its interaction with the key (in red) via the `XOR` operation.
@@ -919,16 +919,16 @@ accessing one after the other would be **faster** than if they were located in
 different parts of the memory. By observing these timing differences, one can
 infer that x=y for the given T-table lookups.
 
-![Alt text](images/image-16.png)
-![Alt text](images/image-17.png)
-![Alt text](images/image-18.png)
-![Alt text](images/image-19.png)
+![Alt text](images/cryptography/image-16.png)
+![Alt text](images/cryptography/image-17.png)
+![Alt text](images/cryptography/image-18.png)
+![Alt text](images/cryptography/image-19.png)
 
 #### Implementation of Attack
 
 The provided diagram represents the "Implementation of Cache Attack," a type of side-channel attack where the attacker exploits the behaviour of the system cache to gain insights into a victim's operations. Let's break it down:
 
-![Alt text](images/image-20.png)
+![Alt text](images/cryptography/image-20.png)
 
 1. **Execution**:
     - This represents the timeline of events or the sequence of actions taken by
