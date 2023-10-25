@@ -295,5 +295,5 @@ Periodic checks against anomolies
 
 #### Challenges and Vulnerabilities
 
-- ROP have been compromised, as highlighted in "ROP is Still Dangerous: Breaking Modern Defenses".
+- ROP Defences have been **compromised**, as highlighted in "ROP is Still Dangerous: Breaking Modern Defenses".
 - Emphasizes the ongoing challenge of creating foolproof defenses against sophisticated attacks.

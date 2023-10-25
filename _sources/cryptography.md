@@ -692,6 +692,53 @@ The above operation is performed for each round of the AES encryption process.
   4. **Error Recovery**: Easy
      - The receiver has the option to omit the affected blocks and proceed with decryption.
 
+**Trival - Padding Oracle Attack**
+
+```{toggle}
+A Padding Oracle Attack is a cryptographic attack that targets the padding of a
+plaintext to make it align with a specific block size. It's most commonly used
+against block ciphers that employ **cipher block chaining (CBC)** mode and exploit
+the way some systems provide feedback about the padding of encrypted data.
+
+Here's a breakdown of how this attack works and its significance:
+
+1. **Padding in Cryptography**: Many encryption algorithms require input data to
+   be a multiple of a certain block size. If the data to be encrypted does not
+   meet this size requirement, it needs to be padded. For example, in the PKCS#7
+   padding scheme, if three bytes are missing to complete a block, those bytes
+   will be filled with the value `03`.
+
+2. **Oracle**: In the context of cryptographic attacks, an "oracle" refers to a
+   system that provides hints or **feedback**. In the Padding Oracle Attack, the
+   "oracle" is a mechanism (like an error message) that tells an attacker if a
+   given encrypted message has correct or incorrect padding when decrypted.
+
+3. **The Attack**: An attacker alters the ciphertext byte by byte and sends it
+   to the server. By observing the server's responses **(whether the padding was
+   correct or not)**, the attacker can deduce information about the plaintext or
+   even the encryption key.
+
+4. **Exploitation**: This attack is potent because it doesn't directly target
+   the encryption itself but rather the feedback the server provides. By making
+   many requests and analyzing the server's responses, the attacker can
+   eventually decrypt the entire ciphertext without knowing the secret key.
+
+5. **Significance**: Padding Oracle Attacks underscore the **importance of not
+   providing verbose error messages** and the dangers of leaking information
+   through side channels. Even a simple error message like "invalid padding" can
+   become a potential vulnerability.
+
+6. **Mitigation**: One common way to prevent padding oracle attacks is to **ensure
+   that error messages are generic**, so attackers can't differentiate between a
+   padding error and other types of errors. Another method is to use
+   authenticated encryption modes that combine encryption and message
+   authentication, ensuring that tampered ciphertexts are detected and rejected
+   before the padding is checked.
+
+Notably, the attack was made famous by the **POODLE (Padding Oracle On Downgraded
+Legacy Encryption)** attack against **SSLv3**.
+```
+
 ## Ways Around Ciphers like AES?
 
 - One thing to note is that attackers often employ tactics that don't adhere to the expected "rules" – in short, attackers always cheat!
