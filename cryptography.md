@@ -486,7 +486,7 @@ $$ E = \{e_k : k \in K\} \text{ for } e_k: P \to C $$
   
 $$ D = \{d_k : k \in K\} \text{ for }  d_k: C \to P $$
 
-### Relation Between Encryption and Decryption**
+### Relation Between Encryption and Decryption
 
 For every key $ k $ in $ K $, and for every plaintext $ x $ in $ P $, the
 encryption of $ x $ using $ e_k $ followed by its decryption using $ d_k $ gives
