@@ -339,7 +339,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -355,6 +357,41 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture-difference">Architecture Difference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#avoiding-cache-collisions">Avoiding Cache Collisions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#address-space-layout-randomization-aslr">Address-Space Layout Randomization (ASLR)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defence-1-preventing-buffer-overflow">Defence 1: Preventing Buffer Overflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-canary">Stack Canary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-pointer">Function pointer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-linking">Dynamic Linking</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure-linkage-table-global-offset-table">Procedure Linkage Table/Global Offset Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#security-implication-plt-got-overwrites">Security Implication - PLT/GOT Overwrites</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overflow-arguments">Overflow Arguments</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defence-2-preventing-execution-of-code">Defence 2: Preventing Execution of Code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-executable-memory-pages">Non-Executable Memory Pages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-oriented-programming-rop">Return-oriented Programming (ROP)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defence-3-preventing-guessable-memory-addresses">Defence 3: Preventing Guessable Memory Addresses</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Address Space Layout Randomization (ASLR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#address-attacks">Address Attacks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#control-flow-integrity">3. Control-flow Integrity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rop-defenses-overview">ROP Defenses Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lower-overhead-defenses">Lower Overhead Defenses</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-and-vulnerabilities">Challenges and Vulnerabilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -375,6 +412,340 @@ document.write(`
 <p><strong>Note</strong>:
 For Buffer Overflow, Format String, Double Free vulnerabilities please refer to <a class="reference external" href="https://github.com/Xiaorui-Huang/ece568-lab1">Lab1 - private repo</a> and lecture notes</p>
 <p>Here we only discuss defence mechanisms for these vulnerabilities.</p>
+<section id="architecture-difference">
+<h2>Architecture Difference<a class="headerlink" href="#architecture-difference" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Similarity in Assembler Code</strong>: The assembler code for both 32-bit and
+64-bit architectures appears quite alike, but there are significant
+differences when delving deeper.</p></li>
+<li><p><strong>Register Naming Conventions</strong>:</p>
+<ul>
+<li><p>In the 32-bit architecture, registers are named with a “e” prefix (e.g.,
+<code class="docutils literal notranslate"><span class="pre">eax</span></code>, <code class="docutils literal notranslate"><span class="pre">ebx</span></code>). These registers can hold 32-bit values.</p></li>
+<li><p>In contrast, the 64-bit architecture uses a “r” prefix (e.g., <code class="docutils literal notranslate"><span class="pre">rax</span></code>, <code class="docutils literal notranslate"><span class="pre">rbx</span></code>).
+These can hold 64-bit values, which allows for the handling of larger data
+and memory addresses.</p></li>
+</ul>
+</li>
+<li><p><strong>Addition of New Registers</strong>: The 64-bit architecture introduced eight new
+general-purpose registers, labeled <code class="docutils literal notranslate"><span class="pre">r8</span></code> through <code class="docutils literal notranslate"><span class="pre">r15</span></code>. This increases the
+number of registers available for operations, which can lead to performance
+improvements in certain scenarios.</p></li>
+<li><p><strong>Calling Conventions</strong>:</p>
+<ul>
+<li><p>When functions are called in a program, they often require arguments. How
+these arguments are passed to the function can differ between architectures
+and operating systems.</p></li>
+<li><p>In the 64-bit architecture on Linux, the “System V AMD64 ABI” calling
+convention is employed. The first six arguments are passed using the
+registers <code class="docutils literal notranslate"><span class="pre">rdi</span></code>, <code class="docutils literal notranslate"><span class="pre">rsi</span></code>, <code class="docutils literal notranslate"><span class="pre">rdx</span></code>, <code class="docutils literal notranslate"><span class="pre">rcx</span></code>, <code class="docutils literal notranslate"><span class="pre">r8</span></code>, and <code class="docutils literal notranslate"><span class="pre">r9</span></code>, instead of pushing
+them onto the stack.</p></li>
+<li><p>On the other hand, Windows uses a different calling convention, referred to
+as the “Microsoft ABI”.</p></li>
+</ul>
+</li>
+</ul>
+<p>These distinctions play a crucial role in areas like software development,
+reverse engineering, and computer security. Understanding these differences can
+be essential, especially when working closely with low-level programming or
+system optimization.</p>
+</section>
+<section id="avoiding-cache-collisions">
+<h2>Avoiding Cache Collisions<a class="headerlink" href="#avoiding-cache-collisions" title="Permalink to this heading">#</a></h2>
+<p><img alt="Alt text" src="_images/image-1.png" /></p>
+<ul class="simple">
+<li><p>Hyper-threaded processors have two logical processors
+that share an instruction cache.</p></li>
+<li><p>A potential issue arises when two processes have their <strong>stacks at the same
+address</strong>, leading to cache collisions. These collisions can degrade performance
+as the processes will keep evicting each other’s data from the cache.</p></li>
+<li><p>To address this problem, the operating system <strong>adjusts the stack addresses</strong>
+based on the lower-bits of the process PID (using a mod function).</p></li>
+</ul>
+</section>
+<section id="address-space-layout-randomization-aslr">
+<h2>Address-Space Layout Randomization (ASLR)<a class="headerlink" href="#address-space-layout-randomization-aslr" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>ASLR is a security technique used by operating systems to prevent exploitation
+of memory vulnerabilities.</p></li>
+<li><p>When a new process starts, its stack is mapped to a <strong>random location</strong> in memory.
+This randomization makes it difficult for attackers to predict the exact
+address of specific buffers or other memory locations.</p></li>
+<li><p>If attackers can’t predict memory addresses, it becomes much harder for them
+to exploit buffer overflows or similar vulnerabilities. If they try, their
+attacks will most likely cause the application to crash rather than giving
+them unauthorized access.</p></li>
+</ul>
+</section>
+<section id="defence-1-preventing-buffer-overflow">
+<h2>Defence 1: Preventing Buffer Overflow<a class="headerlink" href="#defence-1-preventing-buffer-overflow" title="Permalink to this heading">#</a></h2>
+<section id="stack-canary">
+<h3>Stack Canary<a class="headerlink" href="#stack-canary" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Stackshield: Put return addresses on a separate stack with no data</p></li>
+<li><p>StackGuard: Put a <strong>Canary</strong> value before the return address
+<img alt="Alt text" src="_images/image1.png" /></p></li>
+</ul>
+</section>
+<section id="function-pointer">
+<h3>Function pointer<a class="headerlink" href="#function-pointer" title="Permalink to this heading">#</a></h3>
+<p>Function pointers are variables that hold the address of a function. They allow functions to be called indirectly and are used to implement callbacks and table-driven approaches, among other things. Function pointers can be especially useful for creating flexible and modular code.</p>
+<p><strong>Examples:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Declaration and Initialization:</strong></p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">funcPtr</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">add</span><span class="p">;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Using Function Pointers:</strong></p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">funcPtr</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w">  </span><span class="c1">// Calls &#39;add&#39; function and result will be 7</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Array of Function Pointers:</strong>
+Useful for creating a table-driven approach.</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">subtract</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">operations</span><span class="p">[</span><span class="mi">2</span><span class="p">])(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">add</span><span class="p">,</span><span class="w"> </span><span class="n">subtract</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>Now, <code class="docutils literal notranslate"><span class="pre">operations[0](5,</span> <span class="pre">3)</span></code> will return <code class="docutils literal notranslate"><span class="pre">8</span></code> (addition) and <code class="docutils literal notranslate"><span class="pre">operations[1](5,</span> <span class="pre">3)</span></code> will return <code class="docutils literal notranslate"><span class="pre">2</span></code> (subtraction).</p>
+<p>By <strong>overwriting the function pointer</strong>, the attacker can cause execution to be
+redirected next time the program calls the function pointer.</p>
+</section>
+<section id="dynamic-linking">
+<h3>Dynamic Linking<a class="headerlink" href="#dynamic-linking" title="Permalink to this heading">#</a></h3>
+<p>Dynamic linking is a technique in which programs rely on libraries to execute
+certain functions. Instead of having all the code integrated into the
+executable, dynamic linking allows the executable to “link” to external
+libraries and use their functionalities. This is done to save memory and allow
+for easier updates of shared functionalities. Here’s a breakdown of the
+information provided:</p>
+<p><strong>Dynamic Linking:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Purpose:</strong></p>
+<ul class="simple">
+<li><p>Allows programs to call functions like <code class="docutils literal notranslate"><span class="pre">printf</span></code> from dynamic libraries.</p></li>
+<li><p>Saves memory and permits one library to be updated without needing to
+recompile all the programs that use it.</p></li>
+</ul>
+</li>
+<li><p><strong>How it Works:</strong></p>
+<ul class="simple">
+<li><p>Libraries are linked at runtime, not at compile time.</p></li>
+<li><p>The actual location in memory where the library gets loaded can vary.</p></li>
+<li><p>Code is compiled to be position independent.</p></li>
+</ul>
+</li>
+<li><p><strong>Mapping:</strong></p>
+<ul class="simple">
+<li><p>The position-independent function call is mapped to the actual location of the function in the library.</p></li>
+<li><p>This mapping is performed by the <strong>dynamic linker</strong>.</p></li>
+<li><p>Uses two primary tables: the Procedure Linkage Table (PLT) and the Global Offset Table (GOT).</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="procedure-linkage-table-global-offset-table">
+<h3>Procedure Linkage Table/Global Offset Table<a class="headerlink" href="#procedure-linkage-table-global-offset-table" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>GOT (Global Offset Table):</strong></p>
+<ul class="simple">
+<li><p>Contains function pointers.</p></li>
+<li><p>Holds the <strong>absolute memory location</strong> of each dynamically-loaded library
+function. These exact locations are only determined at runtime.</p></li>
+</ul>
+</li>
+<li><p><strong>PLT (Procedure Linkage Table):</strong></p>
+<ul class="simple">
+<li><p>Consists of small functions.</p></li>
+<li><p>Each library function used by the program has one function in the PLT.</p></li>
+<li><p>On its first call, the PLT function <strong>invokes the dynamic linker</strong> to provide the actual function’s location in the GOT.</p></li>
+<li><p>The library itself is also loaded from the disk the first time any of its functions are called.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="security-implication-plt-got-overwrites">
+<h3>Security Implication - PLT/GOT Overwrites<a class="headerlink" href="#security-implication-plt-got-overwrites" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Potential Attack:</strong></p>
+<ul class="simple">
+<li><p>If an attacker can overwrite a memory location, they might <strong>target a GOT function pointer</strong>.</p></li>
+<li><p>Overwriting a GOT pointer can change where a function call in the program
+redirects to, potentially leading to execution of malicious code.</p></li>
+</ul>
+</li>
+<li><p><strong>Binary Analysis:</strong></p>
+<ul class="simple">
+<li><p>Tools like <code class="docutils literal notranslate"><span class="pre">objdump</span> <span class="pre">-x</span></code> allow for the disassembly of an executable, providing insights into the locations of these structures.</p></li>
+<li><p>The PLT and GOT typically reside at <strong>known locations</strong> in memory.</p></li>
+</ul>
+</li>
+<li><p><strong>Platform Specifics:</strong></p></li>
+</ol>
+<div class="toggle docutils container">
+<ul class="simple">
+<li><p>The PLT/GOT mechanism described here is specific to ELF binaries, typically found in UNIX systems.</p></li>
+<li><p>Windows and Mac systems implement dynamic linking differently.</p></li>
+</ul>
+</div>
+</section>
+<section id="overflow-arguments">
+<h3>Overflow Arguments<a class="headerlink" href="#overflow-arguments" title="Permalink to this heading">#</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">128</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;my program&quot;</span><span class="p">;</span>
+<span class="kt">char</span><span class="w"> </span><span class="n">vulnerable</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="n">exec</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>overflow <code class="docutils literal notranslate"><span class="pre">vulnerable</span></code> to overwrite <code class="docutils literal notranslate"><span class="pre">buf</span></code> and execute <code class="docutils literal notranslate"><span class="pre">my</span> <span class="pre">program</span></code></p>
+</section>
+</section>
+<section id="defence-2-preventing-execution-of-code">
+<h2>Defence 2: Preventing Execution of Code<a class="headerlink" href="#defence-2-preventing-execution-of-code" title="Permalink to this heading">#</a></h2>
+<section id="non-executable-memory-pages">
+<h3>Non-Executable Memory Pages<a class="headerlink" href="#non-executable-memory-pages" title="Permalink to this heading">#</a></h3>
+<p>Since 2004, leading processor manufacturers, including Intel and AMD, have
+incorporated support for non-executable memory pages. This functionality allows
+designated memory regions to be marked as non-executable, ensuring that they are
+solely treated as data, rather than executable code.</p>
+<p>For users of Windows operating systems, this feature is recognized as “<strong>Data
+Execution Prevention</strong>” or DEP. Despite the security advantages of DEP, certain
+methods, like the <strong>Return into LibC</strong> technique, can bypass these measures.
+This technique exploits standard C library functions, such as <code class="docutils literal notranslate"><span class="pre">exec</span></code> and
+<code class="docutils literal notranslate"><span class="pre">system</span></code>, enabling execution despite the DEP restrictions.</p>
+</section>
+<section id="return-oriented-programming-rop">
+<h3>Return-oriented Programming (ROP)<a class="headerlink" href="#return-oriented-programming-rop" title="Permalink to this heading">#</a></h3>
+<p><strong>Concept</strong>:</p>
+<ul class="simple">
+<li><p>If you can’t achieve your malicious goal with one function from the standard library (libc), you can link multiple functions together using a corrupted stack.</p></li>
+<li><p>When one function completes, the system looks on the corrupted stack to see which function to execute next.</p></li>
+</ul>
+<p><strong>Method</strong>:</p>
+<ul class="simple">
+<li><p>Standard libraries like libc have a lot of code.</p></li>
+<li><p>Instead of returning to the start of a function, you can make the program return to any part of the code.</p></li>
+<li><p>In the middle of functions, there are return instructions. Due to the variable
+nature of x86 instructions, it’s possible to return in between instructions.</p></li>
+<li><p>This variability allows the discovery of “<strong>gadgets</strong>”: small chunks of code
+that perform desired actions followed by a return instruction. With the right
+combination, you can make the system do almost anything.</p></li>
+<li><p>Using ROP can be as powerful as having the ability to run any code (Turing
+complete).</p></li>
+</ul>
+<p><strong>Challenges</strong>:</p>
+<ul class="simple">
+<li><p>Need for larger attack code sections.</p></li>
+<li><p>Produces many returns, which can be noisy.</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<p><img alt="Alt text" src="_images/image-21.png" /></p>
+<p>Certainly, the image depicts a classic scenario in Return-Oriented Programming (ROP), where an adversary uses existing code snippets, termed “gadgets”, to execute arbitrary operations. The goal here is to construct a stack frame that will execute the system call <code class="docutils literal notranslate"><span class="pre">exit(-1)</span></code>. Let’s break this down step by step:</p>
+<ol class="arabic simple">
+<li><p><strong>Goal Analysis</strong>:</p></li>
+</ol>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Register</p></th>
+<th class="head"><p>Goal Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">eax</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0x01</span></code></p></td>
+<td><p>System call number for <code class="docutils literal notranslate"><span class="pre">exit</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ebx</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0xFFFFFFFF</span></code></p></td>
+<td><p>Argument for <code class="docutils literal notranslate"><span class="pre">exit</span></code> system call (which is <code class="docutils literal notranslate"><span class="pre">-1</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-asm notranslate"><div class="highlight"><pre><span></span><span class="nf">movl</span><span class="w"> </span><span class="no">$1</span><span class="p">,</span><span class="w"> </span><span class="nv">%eax</span><span class="w">  </span><span class="c1"># System call number 1: exit()</span>
+<span class="nf">movl</span><span class="w"> </span><span class="no">$0</span><span class="p">,</span><span class="w"> </span><span class="nv">%ebx</span><span class="w">  </span><span class="c1"># Exits with exit status 0</span>
+<span class="nf">int</span><span class="w"> </span><span class="no">$0x80</span><span class="w">      </span><span class="c1"># Passes control to interrupt vector</span>
+<span class="w">               </span><span class="c1"># invokes system call—in this case system call</span>
+<span class="w">               </span><span class="c1"># number 1 with argument 0</span>
+</pre></div>
+</div>
+<p>Can’t find a way to get -1 (0xFFFFFFFF) into <code class="docutils literal notranslate"><span class="pre">ebx</span></code> directly, but can get 0 into
+<code class="docutils literal notranslate"><span class="pre">ebx</span></code> and then use <code class="docutils literal notranslate"><span class="pre">dec</span></code> to get -1.</p>
+</section>
+</section>
+<section id="defence-3-preventing-guessable-memory-addresses">
+<h2>Defence 3: Preventing Guessable Memory Addresses<a class="headerlink" href="#defence-3-preventing-guessable-memory-addresses" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Address Space Layout Randomization (ASLR)<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Again we have ASLR, which randomizes the location of the stack and <strong>dynamically loaded libraries</strong> making it hard to perform <strong>return-to-libc</strong> attacks or <strong>GOT overwrites</strong>.</p>
+<ul class="simple">
+<li><p>Attacker can try a lot of address space quickly</p></li>
+<li><p>Need large entropy and address space to be effective. (64-bit is better than 32-bit)</p></li>
+</ul>
+</section>
+<section id="address-attacks">
+<h3>Address Attacks<a class="headerlink" href="#address-attacks" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Address Space Leakage**:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Vulnerabilities resembling format strings can expose contents or pointers of an address space.</p></li>
+<li><p>Two-step attack:</p>
+<ul>
+<li><p><strong>Step 1</strong>: Determine a known object’s location, letting attackers understand the layout.</p></li>
+<li><p><strong>Step 2</strong>: Utilize the vulnerability to replace a code pointer with a known location.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>2. Heap Spray</strong>:
+- If a vulnerability permits overriding vast sections of the heap, attackers can write multiple copies of the shellcode, hoping to jump into one.
+- This technique is prevalent in dynamic compilation environments lacking NX-pages, e.g., JVMs and JavaScript engines.</p>
+</section>
+<section id="control-flow-integrity">
+<h3>3. Control-flow Integrity<a class="headerlink" href="#control-flow-integrity" title="Permalink to this heading">#</a></h3>
+<p>Essentially takes source code and ensure that execution <strong>conforms to the source code.</strong></p>
+<ul class="simple">
+<li><p>Considered a top-tier defense against memory corruption attacks.</p></li>
+<li><p>All conceivable execution routes in a program are derived from its <strong>source code</strong>.</p></li>
+<li><p>Protective checks are integrated into the compiled binary, ensuring only the explicit paths in the source code are followed.</p></li>
+</ul>
+<p>These slides emphasize the importance of understanding potential vulnerabilities in computer systems and the measures that can be employed to mitigate risks.</p>
+<p><strong>Properties</strong>:</p>
+<ul class="simple">
+<li><p>Significant performance overhead.</p></li>
+<li><p>No changes to the source code.</p></li>
+</ul>
+</section>
+<section id="rop-defenses-overview">
+<h3>ROP Defenses Overview<a class="headerlink" href="#rop-defenses-overview" title="Permalink to this heading">#</a></h3>
+<p>Periodic checks against anomolies</p>
+<section id="lower-overhead-defenses">
+<h4>Lower Overhead Defenses<a class="headerlink" href="#lower-overhead-defenses" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Processors utilize “Last Branch Record” (LBR) to track recent return operations in hardware.</p></li>
+<li><p>LBR is periodically checked for potential attack indicators, such as a high number of returns relative to executed instructions.</p></li>
+<li><p>These defenses typically have a low overhead, around 5%.</p></li>
+</ul>
+</section>
+<section id="challenges-and-vulnerabilities">
+<h4>Challenges and Vulnerabilities<a class="headerlink" href="#challenges-and-vulnerabilities" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>ROP have been compromised, as highlighted in “ROP is Still Dangerous: Breaking Modern Defenses”.</p></li>
+<li><p>Emphasizes the ongoing challenge of creating foolproof defenses against sophisticated attacks.</p></li>
+</ul>
+</section>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -431,6 +802,47 @@ For Buffer Overflow, Format String, Double Free vulnerabilities please refer to 
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture-difference">Architecture Difference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#avoiding-cache-collisions">Avoiding Cache Collisions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#address-space-layout-randomization-aslr">Address-Space Layout Randomization (ASLR)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defence-1-preventing-buffer-overflow">Defence 1: Preventing Buffer Overflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-canary">Stack Canary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-pointer">Function pointer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-linking">Dynamic Linking</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure-linkage-table-global-offset-table">Procedure Linkage Table/Global Offset Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#security-implication-plt-got-overwrites">Security Implication - PLT/GOT Overwrites</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overflow-arguments">Overflow Arguments</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defence-2-preventing-execution-of-code">Defence 2: Preventing Execution of Code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-executable-memory-pages">Non-Executable Memory Pages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-oriented-programming-rop">Return-oriented Programming (ROP)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defence-3-preventing-guessable-memory-addresses">Defence 3: Preventing Guessable Memory Addresses</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Address Space Layout Randomization (ASLR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#address-attacks">Address Attacks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#control-flow-integrity">3. Control-flow Integrity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rop-defenses-overview">ROP Defenses Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lower-overhead-defenses">Lower Overhead Defenses</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-and-vulnerabilities">Challenges and Vulnerabilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
