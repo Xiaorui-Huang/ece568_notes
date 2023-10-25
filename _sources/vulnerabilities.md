@@ -278,8 +278,6 @@ Essentially takes source code and ensure that execution **conforms to the source
 - All conceivable execution routes in a program are derived from its **source code**.
 - Protective checks are integrated into the compiled binary, ensuring only the explicit paths in the source code are followed.
 
-These slides emphasize the importance of understanding potential vulnerabilities in computer systems and the measures that can be employed to mitigate risks.
-
 **Properties**:
 
 - Significant performance overhead.
