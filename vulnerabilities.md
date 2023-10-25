@@ -259,26 +259,24 @@ Again we have ASLR, which randomizes the location of the stack and **dynamically
 
 ### Address Attacks
 
-1. Address Space Leakage**:
+1. **Address Space Leakage**
 
 - Vulnerabilities resembling format strings can expose contents or pointers of an address space.
 - Two-step attack:
   - **Step 1**: Determine a known object's location, letting attackers understand the layout.
   - **Step 2**: Utilize the vulnerability to replace a code pointer with a known location.
 
-**2. Heap Spray**:
+2. **Heap Spray**:
     - If a vulnerability permits overriding vast sections of the heap, attackers can write multiple copies of the shellcode, hoping to jump into one.
     - This technique is prevalent in dynamic compilation environments lacking NX-pages, e.g., JVMs and JavaScript engines.
 
-### 3. Control-flow Integrity
+### Control-flow Integrity
 
 Essentially takes source code and ensure that execution **conforms to the source code.**
 
-- Considered a top-tier defense against memory corruption attacks.
+- Considered a **top-tier** defense against memory corruption attacks.
 - All conceivable execution routes in a program are derived from its **source code**.
 - Protective checks are integrated into the compiled binary, ensuring only the explicit paths in the source code are followed.
-
-These slides emphasize the importance of understanding potential vulnerabilities in computer systems and the measures that can be employed to mitigate risks.
 
 **Properties**:
 
@@ -299,4 +297,3 @@ Periodic checks against anomolies
 
 - ROP have been compromised, as highlighted in "ROP is Still Dangerous: Breaking Modern Defenses".
 - Emphasizes the ongoing challenge of creating foolproof defenses against sophisticated attacks.
-
