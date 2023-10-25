@@ -4,5 +4,7 @@
 format: jb-book
 root: README
 chapters:
+- file: vulnerabilities.md
+  title: 'Stack Related Vulnerabilities'
 - file: cryptography.md
   title: 'Cryptography'
