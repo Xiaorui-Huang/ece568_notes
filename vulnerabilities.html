@@ -696,7 +696,7 @@ complete).</p></li>
 <section id="address-attacks">
 <h3>Address Attacks<a class="headerlink" href="#address-attacks" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
-<li><p>Address Space Leakage**:</p></li>
+<li><p><strong>Address Space Leakage</strong></p></li>
 </ol>
 <ul class="simple">
 <li><p>Vulnerabilities resembling format strings can expose contents or pointers of an address space.</p></li>
@@ -707,9 +707,14 @@ complete).</p></li>
 </ul>
 </li>
 </ul>
-<p><strong>2. Heap Spray</strong>:
-- If a vulnerability permits overriding vast sections of the heap, attackers can write multiple copies of the shellcode, hoping to jump into one.
-- This technique is prevalent in dynamic compilation environments lacking NX-pages, e.g., JVMs and JavaScript engines.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Heap Spray</strong>:</p>
+<ul class="simple">
+<li><p>If a vulnerability permits overriding vast sections of the heap, attackers can write multiple copies of the shellcode, hoping to jump into one.</p></li>
+<li><p>This technique is prevalent in dynamic compilation environments lacking NX-pages, e.g., JVMs and JavaScript engines.</p></li>
+</ul>
+</li>
+</ol>
 </section>
 <section id="control-flow-integrity">
 <h3>Control-flow Integrity<a class="headerlink" href="#control-flow-integrity" title="Permalink to this heading">#</a></h3>
