@@ -274,7 +274,7 @@ Again we have ASLR, which randomizes the location of the stack and **dynamically
 
 Essentially takes source code and ensure that execution **conforms to the source code.**
 
-- Considered a top-tier defense against memory corruption attacks.
+- Considered a **top-tier** defense against memory corruption attacks.
 - All conceivable execution routes in a program are derived from its **source code**.
 - Protective checks are integrated into the compiled binary, ensuring only the explicit paths in the source code are followed.
 
@@ -299,4 +299,3 @@ Periodic checks against anomolies
 
 - ROP have been compromised, as highlighted in "ROP is Still Dangerous: Breaking Modern Defenses".
 - Emphasizes the ongoing challenge of creating foolproof defenses against sophisticated attacks.
-
