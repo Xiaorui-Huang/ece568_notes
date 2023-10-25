@@ -270,7 +270,7 @@ Again we have ASLR, which randomizes the location of the stack and **dynamically
     - If a vulnerability permits overriding vast sections of the heap, attackers can write multiple copies of the shellcode, hoping to jump into one.
     - This technique is prevalent in dynamic compilation environments lacking NX-pages, e.g., JVMs and JavaScript engines.
 
-### 3. Control-flow Integrity
+### Control-flow Integrity
 
 Essentially takes source code and ensure that execution **conforms to the source code.**
 
